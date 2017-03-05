@@ -1,0 +1,5 @@
+PaymentMethodName,CustomerUsername,NameOnCard,CreditCardNumber,ExpirationDate
+ChaseCard,johnDoe,John S. Doe,1111-2222-3333-4444,06-18
+ChaseCard,janeDoe,John S. Doe,1111-2222-3333-4444,06-18
+DebitCard,johnDoe,John S. Doe,1234-1234-1234-1234,09-20
+AmazonCard,ericMammoser,Eric R. Mammoser,9999-9999-9999-9999,11-17
