@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by ermam on 3/20/2017 for the tigersale.com application.
  *
- * An application representation of a Customer User
+ * An application representation of an Address
  */
 public class Address {
     public int id;

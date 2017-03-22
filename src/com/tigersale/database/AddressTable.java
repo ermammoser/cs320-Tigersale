@@ -82,7 +82,7 @@ public class AddressTable {
             while((line = br.readLine()) != null)
             {
                 String[] values = line.split(",");
-                insertStatement.setString(1, values[0]);
+                insertStatement.setInt(1, Integer.valueOf(values[0]));
                 insertStatement.setString(2, values[1]);
                 insertStatement.setString(3, values[2]);
                 insertStatement.setString(4, values[3]);
