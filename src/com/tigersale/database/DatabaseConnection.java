@@ -1,5 +1,6 @@
 package com.tigersale.database;
 
+import com.tigersale.model.PaymentMethod;
 import org.h2.store.fs.FileUtils;
 
 import java.io.File;
@@ -64,5 +65,7 @@ public class DatabaseConnection {
     private static void createTables()
     {
         CustomerUserTable.createTable();
+        AddressTable.createTable();
+        PaymentMethodTable.createTable(); // Cannot go before CustomerUserTable.createTable()
     }
 }

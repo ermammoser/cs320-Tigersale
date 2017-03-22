@@ -1,5 +1,5 @@
-PaymentMethodName,CustomerUsername,NameOnCard,CreditCardNumber,ExpirationDate
-ChaseCard,johnDoe,John S. Doe,1111-2222-3333-4444,06-18
-ChaseCard,janeDoe,John S. Doe,1111-2222-3333-4444,06-18
-DebitCard,johnDoe,John S. Doe,1234-1234-1234-1234,09-20
-AmazonCard,ericMammoser,Eric R. Mammoser,9999-9999-9999-9999,11-17
+PaymentMethodName,CustomerUsername,NameOnCard,CreditCardNumber,CVCCode,ExpirationDate
+ChaseCard,johnDoe,John S. Doe,1111222233334444,232,06-18
+ChaseCard,janeDoe,John S. Doe,1111222233334444,477,06-18
+DebitCard,johnDoe,John S. Doe,1234123412341234,188,09-20
+AmazonCard,ericMammoser,Eric R. Mammoser,9999999999999999,523,11-17
