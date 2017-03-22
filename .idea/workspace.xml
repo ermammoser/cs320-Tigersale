@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7dcf13a4-48ae-4079-92c1-eb0358c179e5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tigersale/database/AddressTable.java" afterPath="$PROJECT_DIR$/src/com/tigersale/database/AddressTable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tigersale/database/CustomerUserTable.java" afterPath="$PROJECT_DIR$/src/com/tigersale/database/CustomerUserTable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tigersale/database/DatabaseConnection.java" afterPath="$PROJECT_DIR$/src/com/tigersale/database/DatabaseConnection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tigersale/model/Address.java" afterPath="$PROJECT_DIR$/src/com/tigersale/model/Address.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tigersale/model/PaymentMethod.java" afterPath="$PROJECT_DIR$/src/com/tigersale/model/PaymentMethod.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mockData/InventoryManager.csv" afterPath="$PROJECT_DIR$/src/mockData/InventoryManager.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tigersale/database/InventoryManagerTable.java" afterPath="$PROJECT_DIR$/src/com/tigersale/database/InventoryManagerTable.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,55 +23,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="DatabaseConnection.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/tigersale/database/DatabaseConnection.java">
+      <file leaf-file-name="ProductTable.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/tigersale/database/ProductTable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1348">
-              <caret line="68" column="44" lean-forward="false" selection-start-line="68" selection-start-column="44" selection-end-line="68" selection-end-column="44" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="518">
+              <caret line="99" column="0" lean-forward="true" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CustomerUserTable.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CustomerUserTable.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/tigersale/database/CustomerUserTable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
+            <state relative-caret-position="-467">
               <caret line="58" column="60" lean-forward="false" selection-start-line="58" selection-start-column="60" selection-end-line="58" selection-end-column="60" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InventoryManagerTable.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/tigersale/database/InventoryManagerTable.java">
+      <file leaf-file-name="Product.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/tigersale/model/Product.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="485">
-              <caret line="98" column="23" lean-forward="false" selection-start-line="98" selection-start-column="23" selection-end-line="98" selection-end-column="23" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InventoryManager.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mockData/InventoryManager.csv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
-              <caret line="2" column="40" lean-forward="false" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
+            <state relative-caret-position="264">
+              <caret line="8" column="11" lean-forward="false" selection-start-line="8" selection-start-column="11" selection-end-line="14" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Tigersale.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/tigersale/main/Tigersale.java">
+      <file leaf-file-name="Product.csv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mockData/Product.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="7" column="53" lean-forward="false" selection-start-line="7" selection-start-column="53" selection-end-line="7" selection-end-column="53" />
+            <state relative-caret-position="0">
+              <caret line="0" column="53" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -93,6 +75,8 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>-</find>
+      <find>public</find>
+      <find>public</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -111,7 +95,6 @@
         <option value="$PROJECT_DIR$/src/com/tigersale/model/CustomerUser.java" />
         <option value="$PROJECT_DIR$/src/com/tigersale/main/Tigersale.java" />
         <option value="$PROJECT_DIR$/src/mockData/PaymentMethod.csv" />
-        <option value="$PROJECT_DIR$/src/com/tigersale/database/DatabaseConnection.java" />
         <option value="$PROJECT_DIR$/src/com/tigersale/database/PaymentMethodTable.java" />
         <option value="$PROJECT_DIR$/src/com/tigersale/database/AddressTable.java" />
         <option value="$PROJECT_DIR$/src/com/tigersale/database/CustomerUserTable.java" />
@@ -120,6 +103,9 @@
         <option value="$PROJECT_DIR$/src/com/tigersale/model/Address.java" />
         <option value="$PROJECT_DIR$/src/mockData/InventoryManager.csv" />
         <option value="$PROJECT_DIR$/src/com/tigersale/database/InventoryManagerTable.java" />
+        <option value="$PROJECT_DIR$/src/com/tigersale/database/DatabaseConnection.java" />
+        <option value="$PROJECT_DIR$/src/com/tigersale/model/Product.java" />
+        <option value="$PROJECT_DIR$/src/com/tigersale/database/ProductTable.java" />
       </list>
     </option>
   </component>
@@ -729,24 +715,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tigersale/database/CustomerUserTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="58" column="60" lean-forward="false" selection-start-line="58" selection-start-column="60" selection-end-line="58" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tigersale/database/DatabaseConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1348">
-          <caret line="68" column="44" lean-forward="false" selection-start-line="68" selection-start-column="44" selection-end-line="68" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tigersale/model/Address.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
@@ -803,11 +771,53 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tigersale/database/InventoryManagerTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="485">
-          <caret line="98" column="23" lean-forward="false" selection-start-line="98" selection-start-column="23" selection-end-line="98" selection-end-column="23" />
+        <state relative-caret-position="848">
+          <caret line="109" column="0" lean-forward="true" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tigersale/database/DatabaseConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="777">
+          <caret line="69" column="35" lean-forward="false" selection-start-line="69" selection-start-column="35" selection-end-line="69" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mockData/Product.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="53" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tigersale/model/Product.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="8" column="11" lean-forward="false" selection-start-line="8" selection-start-column="11" selection-end-line="14" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tigersale/database/ProductTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="518">
+          <caret line="99" column="0" lean-forward="true" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tigersale/database/CustomerUserTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-467">
+          <caret line="58" column="60" lean-forward="false" selection-start-line="58" selection-start-column="60" selection-end-line="58" selection-end-column="60" />
+          <folding />
         </state>
       </provider>
     </entry>

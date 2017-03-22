@@ -67,6 +67,7 @@ public class DatabaseConnection {
         CustomerUserTable.createTable();
         AddressTable.createTable();
         InventoryManagerTable.createTable();
+        ProductTable.createTable();
         PaymentMethodTable.createTable(); // Cannot go before CustomerUserTable.createTable()
     }
 }
