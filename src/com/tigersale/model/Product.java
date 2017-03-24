@@ -9,12 +9,12 @@ public class Product {
     public int productId;
     public String name;
     public String description;
-    public int price;
+    public double price;
     public int stock;
     public String brand;
     public String category;
 
-    public Product(int productId, String name, String description, int price, int stock, String brand, String category)
+    public Product(int productId, String name, String description, double price, int stock, String brand, String category)
     {
         this.productId = productId;
         this.name = name;

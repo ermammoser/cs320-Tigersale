@@ -1,43 +1,39 @@
 package com.tigersale.database;
 
-import com.tigersale.model.Product;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Created by ermam on 3/22/2017 for the tigersale.com application.
  *
  * This class provides an application level interface to interact with
- * the product table within the tigersale.com's database
+ * the shopping list table within the tigersale.com's database
  */
-public class ProductTable {
+public class ShoppingListTable {
 
     /**
      * The date of the table
      */
-    public static final String TABLE_NAME = "Product";
+    public static final String TABLE_NAME = "ShoppingList";
 
     /**
      * The date of the file that contains mock data for the table
      */
-    private static final String MOCK_DATA =  "Product.csv";
+    private static final String MOCK_DATA =  "ShoppingList.csv";
 
     /**
      * Helpful enumeration for all of the fields in the table
      */
     public enum Fields
     {
-        ProductId("ProductId"),
-        Name("Date"),
-        Description("Cost"),
-        Price("Status"),
-        Stock("Stock"),
-        Brand("Brand"),
-        Category("Category");
+        CustomerUsername("CustomerUsername"),
+        ProductId("TransactionId"),
+        Amount("Amount");
 
         String name;
 
@@ -54,19 +50,18 @@ public class ProductTable {
     }
 
     /**
-     * Creates and populates the Product table in the database
+     * Creates and populates the Shopping List table in the database
      */
     protected static void createTable()
     {
         try {
             String createStatement  = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
-                    + Fields.ProductId + " INTEGER PRIMARY KEY,"
-                    + Fields.Name + " VARCHAR(30),"
-                    + Fields.Description + " VARCHAR(500),"
-                    + Fields.Price + " DECIMAL(10,2),"
-                    + Fields.Stock + " INTEGER,"
-                    + Fields.Brand + " VARCHAR(30),"
-                    + Fields.Category + " VARCHAR(30)"
+                    + Fields.CustomerUsername + " VARCHAR(30),"
+                    + Fields.ProductId + " INTEGER,"
+                    + Fields.Amount + " INTEGER,"
+                    + "PRIMARY KEY (" + Fields.CustomerUsername + "," + Fields.ProductId + "),"
+                    + "FOREIGN KEY (" + Fields.CustomerUsername + ") REFERENCES " + CustomerUserTable.TABLE_NAME + "(" + CustomerUserTable.Fields.CustomerUsername + "),"
+                    + "FOREIGN KEY (" + Fields.ProductId + ") REFERENCES " + ProductTable.TABLE_NAME + "(" + ProductTable.Fields.ProductId + ")"
                     +");" ;
 
             // Create the createStatement
@@ -81,19 +76,15 @@ public class ProductTable {
             br.readLine();
 
             // Create blank insert statement
-            PreparedStatement insertStatement = DatabaseConnection.conn.prepareStatement("INSERT INTO " + TABLE_NAME + " VALUES (?,?,?,?,?,?,?)");
+            PreparedStatement insertStatement = DatabaseConnection.conn.prepareStatement("INSERT INTO " + TABLE_NAME + " VALUES (?,?,?)");
 
             String line;
             while((line = br.readLine()) != null)
             {
                 String[] values = line.split(",");
-                insertStatement.setInt(1, Integer.valueOf(values[0]));
-                insertStatement.setString(2, values[1]);
-                insertStatement.setString(3, values[2]);
-                insertStatement.setBigDecimal(4, BigDecimal.valueOf(Double.valueOf(values[3])));
-                insertStatement.setInt(5, Integer.valueOf(values[4]));
-                insertStatement.setString(6, values[5]);
-                insertStatement.setString(7, values[6]);
+                insertStatement.setString(1, values[0]);
+                insertStatement.setInt(2, Integer.valueOf(values[1]));
+                insertStatement.setInt(3, Integer.valueOf(values[2]));
                 insertStatement.execute();
             }
             insertStatement.close();

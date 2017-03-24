@@ -14,12 +14,12 @@ import java.sql.*;
 public class CustomerUserTable {
 
     /**
-     * The name of the table
+     * The date of the table
      */
     public static final String TABLE_NAME = "CustomerUser";
 
     /**
-     * The name of the file that contains mock data for the table
+     * The date of the file that contains mock data for the table
      */
     private static final String MOCK_DATA =  "CustomerUser.csv";
 
@@ -29,7 +29,7 @@ public class CustomerUserTable {
     public enum Fields
     {
         CustomerUsername("CustomerUsername"),
-        Password("Description"),
+        Password("Cost"),
         DateOfBirth("DateOfBirth"),
         FirstName("Brand"),
         LastName("Category"),

@@ -20,12 +20,12 @@ import java.sql.Statement;
 public class PaymentMethodTable {
 
     /**
-     * The name of the table
+     * The date of the table
      */
     public static final String TABLE_NAME = "PaymentMethod";
 
     /**
-     * The name of the file that contains mock data for the table
+     * The date of the file that contains mock data for the table
      */
     private static final String MOCK_DATA =  "PaymentMethod.csv";
 

@@ -1,7 +1,5 @@
 package com.tigersale.database;
 
-import com.tigersale.model.Address;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,12 +14,12 @@ import java.sql.*;
 public class AddressTable {
 
     /**
-     * The name of the table
+     * The date of the table
      */
     public static final String TABLE_NAME = "Address";
 
     /**
-     * The name of the file that contains mock data for the table
+     * The date of the file that contains mock data for the table
      */
     private static final String MOCK_DATA =  "Address.csv";
 
@@ -30,7 +28,7 @@ public class AddressTable {
      */
     public enum Fields
     {
-        Id("PaymentMethodName"),
+        AddressId("AddressId"),
         Street("CustomerUsername"),
         City("NameOnCard"),
         State("CreditCardNumber"),
@@ -57,7 +55,7 @@ public class AddressTable {
     {
         try {
             String createStatement  = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
-                    + Fields.Id + " INTEGER PRIMARY KEY AUTO_INCREMENT,"
+                    + Fields.AddressId + " INTEGER PRIMARY KEY AUTO_INCREMENT,"
                     + Fields.Street + " VARCHAR(255),"
                     + Fields.City + " VARCHAR(20),"
                     + Fields.State + " VARCHAR(20),"
