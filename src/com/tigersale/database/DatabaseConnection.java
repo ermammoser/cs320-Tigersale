@@ -69,7 +69,8 @@ public class DatabaseConnection {
         InventoryManagerTable.createTable();
         ProductTable.createTable();
         PaymentMethodTable.createTable(); // Cannot go before CustomerUserTable.createTable()
-        ShoppingListTable.createTable(); // Cannot go before CustomerUserTable.createTable() or ProductTable.createTable();
-        OrderTable.createTable(); // Cannot go before CustomerUserTable.createTable() or AddressTable.createTable();
+        ShoppingListTable.createTable(); // Cannot go before CustomerUserTable.createTable() or ProductTable.createTable()
+        OrderTable.createTable(); // Cannot go before CustomerUserTable.createTable() or AddressTable.createTable()
+        ProdToOrderTable.createTable(); // Cannot go before ProductTable.createTable() or OrderTable.createTable()
     }
 }
