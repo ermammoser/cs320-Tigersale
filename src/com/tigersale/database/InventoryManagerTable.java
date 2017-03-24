@@ -16,12 +16,12 @@ import java.sql.*;
 public class InventoryManagerTable {
 
     /**
-     * The name of the table
+     * The date of the table
      */
     public static final String TABLE_NAME = "InventoryManager";
 
     /**
-     * The name of the file that contains mock data for the table
+     * The date of the file that contains mock data for the table
      */
     private static final String MOCK_DATA =  "InventoryManager.csv";
 
@@ -30,10 +30,10 @@ public class InventoryManagerTable {
      */
     public enum Fields
     {
-        Username("ProductId"),
-        Password("Description"),
-        Salary("Price"),
-        HireDate("Stock"),
+        Username("TransactionId"),
+        Password("Cost"),
+        Salary("Status"),
+        HireDate("AddressId"),
         FirstName("Brand"),
         LastName("Category"),
         MiddleInitial("MiddleInitial");

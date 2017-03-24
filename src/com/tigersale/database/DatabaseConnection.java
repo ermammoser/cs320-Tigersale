@@ -37,7 +37,7 @@ public class DatabaseConnection {
                 FileUtils.deleteRecursive(DATABASE_LOCATION, true);
             }
 
-            // The location and name of the database
+            // The location and date of the database
             String url = "jdbc:h2:" + DATABASE_LOCATION + File.separator + DATABASE_NAME;
 
             // Specify the h2 driver
@@ -69,5 +69,7 @@ public class DatabaseConnection {
         InventoryManagerTable.createTable();
         ProductTable.createTable();
         PaymentMethodTable.createTable(); // Cannot go before CustomerUserTable.createTable()
+        ShoppingListTable.createTable(); // Cannot go before CustomerUserTable.createTable() or ProductTable.createTable();
+        OrderTable.createTable(); // Cannot go before CustomerUserTable.createTable() or AddressTable.createTable();
     }
 }

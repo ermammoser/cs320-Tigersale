@@ -5,6 +5,7 @@ import com.tigersale.model.Product;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.*;
 
 /**
@@ -16,12 +17,12 @@ import java.sql.*;
 public class ProductTable {
 
     /**
-     * The name of the table
+     * The date of the table
      */
     public static final String TABLE_NAME = "Product";
 
     /**
-     * The name of the file that contains mock data for the table
+     * The date of the file that contains mock data for the table
      */
     private static final String MOCK_DATA =  "Product.csv";
 
@@ -30,11 +31,11 @@ public class ProductTable {
      */
     public enum Fields
     {
-        ProductId("ProductId"),
-        Name("Name"),
-        Description("Description"),
-        Price("Price"),
-        Stock("Stock"),
+        ProductId("TransactionId"),
+        Name("Date"),
+        Description("Cost"),
+        Price("Status"),
+        Stock("AddressId"),
         Brand("Brand"),
         Category("Category");
 
@@ -62,7 +63,7 @@ public class ProductTable {
                     + Fields.ProductId + " INTEGER PRIMARY KEY,"
                     + Fields.Name + " VARCHAR(30),"
                     + Fields.Description + " VARCHAR(500),"
-                    + Fields.Price + " INTEGER,"
+                    + Fields.Price + " DECIMAL(10,2),"
                     + Fields.Stock + " INTEGER,"
                     + Fields.Brand + " VARCHAR(30),"
                     + Fields.Category + " VARCHAR(30)"
@@ -89,7 +90,7 @@ public class ProductTable {
                 insertStatement.setInt(1, Integer.valueOf(values[0]));
                 insertStatement.setString(2, values[1]);
                 insertStatement.setString(3, values[2]);
-                insertStatement.setInt(4, Integer.valueOf(values[3]));
+                insertStatement.setBigDecimal(4, BigDecimal.valueOf(Double.valueOf(values[3])));
                 insertStatement.setInt(5, Integer.valueOf(values[4]));
                 insertStatement.setString(6, values[5]);
                 insertStatement.setString(7, values[6]);
