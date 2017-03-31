@@ -55,15 +55,57 @@ public class ProductTable {
         }
     }
 
+    /**
+     * Inserts a product into the table
+     *
+     * @param name The name of the product
+     * @param description The product's description
+     * @param price The price of the product
+     * @param stock The stock
+     * @param brand The product's brand
+     * @param category The product's category
+     *
+     * @return The number of updated rows
+     */
+    public static int insertProduct(String name, String description, double price, int stock, String brand, String category)
+    {
+        int numChanged = 0;
+        try {
+            PreparedStatement insertStatement = DatabaseConnection.conn.prepareStatement("INSERT INTO " +
+                    TABLE_NAME + "("+ Fields.Name + "," + Fields.Description + "," + Fields.Price + "," +
+                    Fields.Stock + "," + Fields.Brand + "," + Fields.Category + ") VALUES (?,?,?,?,?,?)");
+
+            insertStatement.setString(1, name);
+            insertStatement.setString(2, description);
+            insertStatement.setBigDecimal(3, BigDecimal.valueOf(price));
+            insertStatement.setInt(4, stock);
+            insertStatement.setString(5, brand);
+            insertStatement.setString(6, category);
+            numChanged = insertStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return numChanged;
+    }
+
+    /**
+     * Returns a list of all products in the database that satisfy the search string.  This search
+     * checkc the category, brand, name, and description
+     *
+     * @param searchString The search string used to search for products
+     * @return List of products that match the search string
+     */
     public static List<Product> searchForProducts(String searchString)
     {
         ArrayList<Product> products = new ArrayList<>();
         try {
             searchString = "%" + searchString + "%";
             PreparedStatement searchStatement = DatabaseConnection.conn.prepareStatement("SELECT * FROM " +
-                    TABLE_NAME + " WHERE " + Fields.Stock + " > 0 AND (" + Fields.Brand + " like ? " +
-                    "OR " + Fields.Category + " like ? OR " + Fields.Name + " like ? OR " +
-                    Fields.Description + " like ?)");
+                    TABLE_NAME + " WHERE " + Fields.Stock + " > 0 AND (" + Fields.Brand + " LIKE ? " +
+                    "OR " + Fields.Category + " LIKE ? OR " + Fields.Name + " LIKE ? OR " +
+                    Fields.Description + " LIKE ?)");
             searchStatement.setString(1, searchString);
             searchStatement.setString(2, searchString);
             searchStatement.setString(3, searchString);
@@ -109,7 +151,7 @@ public class ProductTable {
     {
         try {
             String createStatement  = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
-                    + Fields.ProductId + " INTEGER PRIMARY KEY,"
+                    + Fields.ProductId + " INTEGER PRIMARY KEY AUTO_INCREMENT,"
                     + Fields.Name + " VARCHAR(30),"
                     + Fields.Description + " VARCHAR(500),"
                     + Fields.Price + " DECIMAL(10,2),"
