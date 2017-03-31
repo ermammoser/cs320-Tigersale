@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ermam on 3/22/2017 for the tigersale.com application.
@@ -51,6 +53,53 @@ public class ProductTable {
         {
             return name;
         }
+    }
+
+    public static List<Product> searchForProducts(String searchString)
+    {
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            searchString = "%" + searchString + "%";
+            PreparedStatement searchStatement = DatabaseConnection.conn.prepareStatement("SELECT * FROM " +
+                    TABLE_NAME + " WHERE " + Fields.Stock + " > 0 AND (" + Fields.Brand + " like ? " +
+                    "OR " + Fields.Category + " like ? OR " + Fields.Name + " like ? OR " +
+                    Fields.Description + " like ?)");
+            searchStatement.setString(1, searchString);
+            searchStatement.setString(2, searchString);
+            searchStatement.setString(3, searchString);
+            searchStatement.setString(4, searchString);
+            ResultSet rs = searchStatement.executeQuery();
+            while(rs.next())
+            {
+                products.add(productFromResultSet(rs));
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+    /**
+     * Creates a product from the given result set
+     *
+     * @param rs A result set containing a product
+     *
+     * @return A product from the current result
+     * @throws SQLException If there are any missing columns that are requested here
+     */
+    protected static Product productFromResultSet(ResultSet rs) throws SQLException
+    {
+        int productId = rs.getInt(Fields.ProductId.toString());
+        String name = rs.getString(Fields.Name.toString());
+        String description = rs.getString(Fields.Description.toString());
+        double price = rs.getBigDecimal(Fields.Price.toString()).doubleValue();
+        int stock = rs.getInt(Fields.Stock.toString());
+        String brand = rs.getString(Fields.Brand.toString());
+        String category = rs.getString(Fields.Category.toString());
+
+        return new Product(productId, name, description, price, stock, brand, category);
     }
 
     /**
