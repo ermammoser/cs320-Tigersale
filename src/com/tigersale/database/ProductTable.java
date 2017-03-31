@@ -34,9 +34,9 @@ public class ProductTable {
     public enum Fields
     {
         ProductId("ProductId"),
-        Name("Date"),
-        Description("Cost"),
-        Price("Status"),
+        Name("Name"),
+        Description("Description"),
+        Price("Price"),
         Stock("Stock"),
         Brand("Brand"),
         Category("Category");
@@ -53,6 +53,72 @@ public class ProductTable {
         {
             return name;
         }
+    }
+
+    /**
+     * Updates the character data for the product
+     *
+     * @param p The product to update.  All data in p is the new data.
+     *
+     * @return The number of updated rows
+     */
+    public static int updateProductValues(Product p)
+    {
+        int numChanged = 0;
+        try {
+            PreparedStatement insertStatement = DatabaseConnection.conn.prepareStatement("UPDATE " +
+                    TABLE_NAME + " SET " + Fields.Name + " = ?, " +
+                    Fields.Description + " = ?, " +
+                    Fields.Price + " = ?, " +
+                    Fields.Brand + " = ?, " +
+                    Fields.Category + " = ? " +
+                    "WHERE " + Fields.ProductId + " = ?"
+            );
+
+            insertStatement.setString(1, p.name);
+            insertStatement.setString(2, p.description);
+            insertStatement.setBigDecimal(3, BigDecimal.valueOf(p.price));
+            insertStatement.setString(4, p.brand);
+            insertStatement.setString(5, p.category);
+            insertStatement.setInt(6, p.productId);
+
+            numChanged = insertStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return numChanged;
+    }
+
+
+    /**
+     * Updates the stock value for a product
+     *
+     * @param p The product to update
+     * @param stockDifference The stock difference to update
+     *
+     * @return The number of updated rows
+     */
+    public static int updateStockValue(Product p, int stockDifference)
+    {
+        int numChanged = 0;
+        try {
+            PreparedStatement insertStatement = DatabaseConnection.conn.prepareStatement("UPDATE " +
+                    TABLE_NAME + " SET " + Fields.Stock + " = " + Fields.Stock + " + ? " +
+                    "WHERE " + Fields.ProductId + " = ?"
+            );
+
+            insertStatement.setInt(1, stockDifference);
+            insertStatement.setInt(2, p.productId);
+
+            numChanged = insertStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return numChanged;
     }
 
     /**
