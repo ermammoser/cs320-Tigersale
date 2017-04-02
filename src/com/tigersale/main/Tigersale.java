@@ -3,6 +3,7 @@ package com.tigersale.main;
 import com.tigersale.database.AddressTable;
 import com.tigersale.database.DatabaseConnection;
 import com.tigersale.database.ProductTable;
+import com.tigersale.model.Address;
 import com.tigersale.model.CustomerUser;
 import com.tigersale.model.Product;
 
@@ -21,8 +22,5 @@ public class Tigersale {
         DatabaseConnection.initializeConnection(true);
 
         CustomerUser user = new CustomerUser("ericMammoser", "test", new Date(), "","","");
-        System.out.println(AddressTable.getAddresses(user));
-        AddressTable.insertAddress("testStreet", "testCity", "testSTate", "14034", user);
-        System.out.println(AddressTable.getAddresses(user));
     }
 }

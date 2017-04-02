@@ -54,6 +54,30 @@ public class AddressTable {
         }
     }
 
+    /**'
+     * Removes an address from the table
+     *
+     * @param addr The address to remove
+     *
+     * @return The number of rows updated
+     */
+    public static int deleteAddress(Address addr)
+    {
+        int numChanged = 0;
+        try {
+            PreparedStatement deleteStatement = DatabaseConnection.conn.prepareStatement("DELETE FROM " +
+                    TABLE_NAME + " WHERE " + Fields.AddressId + " = ?");
+
+            deleteStatement.setInt(1, addr.id);
+            numChanged = deleteStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return numChanged;
+    }
+
     /**
      * Inserts an address into the table
      *
