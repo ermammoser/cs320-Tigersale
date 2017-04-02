@@ -144,7 +144,7 @@ public class AddressTable {
      *
      * @param rs A result set containing an address
      *
-     * @return A address from the current result
+     * @return An address from the current result
      * @throws SQLException If there are any missing columns that are requested here
      */
     protected static Address addressFromResultSet(ResultSet rs) throws SQLException
