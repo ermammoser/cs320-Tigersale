@@ -54,6 +54,39 @@ public class AddressTable {
         }
     }
 
+    /**
+     * Inserts an address into the table
+     *
+     * @param street The street of the address
+     * @param city The city of the address
+     * @param state The state for the address
+     * @param zipCode The zip code for the address
+     * @param user The user who added the address
+     *
+     * @return The number of updated rows
+     */
+    public static int insertAddress(String street, String city, String state, String zipCode, CustomerUser user)
+    {
+        int numChanged = 0;
+        try {
+            PreparedStatement insertStatement = DatabaseConnection.conn.prepareStatement("INSERT INTO " +
+                    TABLE_NAME + "("+ Fields.Street + "," + Fields.City+ "," + Fields.State+ "," +
+                    Fields.ZipCode + "," + Fields.CustomerUsername + ") VALUES (?,?,?,?,?)");
+
+            insertStatement.setString(1, street);
+            insertStatement.setString(2, city);
+            insertStatement.setString(3, state);
+            insertStatement.setString(4, zipCode);
+            insertStatement.setString(5, user.customerUsername);
+            numChanged = insertStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return numChanged;
+    }
+
 
     /**
      * Returns a list of all of the addresses for a Customer User

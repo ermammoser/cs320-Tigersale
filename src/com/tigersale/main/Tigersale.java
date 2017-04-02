@@ -22,5 +22,7 @@ public class Tigersale {
 
         CustomerUser user = new CustomerUser("ericMammoser", "test", new Date(), "","","");
         System.out.println(AddressTable.getAddresses(user));
+        AddressTable.insertAddress("testStreet", "testCity", "testSTate", "14034", user);
+        System.out.println(AddressTable.getAddresses(user));
     }
 }
