@@ -29,10 +29,10 @@ public class CustomerUserTable {
     public enum Fields
     {
         CustomerUsername("CustomerUsername"),
-        Password("Cost"),
+        Password("Password"),
         DateOfBirth("DateOfBirth"),
-        FirstName("Brand"),
-        LastName("Category"),
+        FirstName("FirstName"),
+        LastName("LastName"),
         MiddleInitial("MiddleInitial");
 
         String name;
