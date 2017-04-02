@@ -13,19 +13,21 @@ public class Address {
     public String city;
     public String state;
     public String zipCode;
+    public String customerUsername;
 
-    public Address(int id, String street, String city, String state, String zipCode)
+    public Address(int id, String street, String city, String state, String zipCode, String customerUsername)
     {
         this.id = id;
         this.street = street;
         this.city = city;
         this.state = state;
         this.zipCode = zipCode;
+        this.customerUsername = customerUsername;
     }
 
     @Override
     public String toString()
     {
-        return id + ": " + street + " " + city + " " + state + ", " + zipCode;
+        return id + ": " + street + " " + city + " " + state + ", " + zipCode + ", " + customerUsername;
     }
 }

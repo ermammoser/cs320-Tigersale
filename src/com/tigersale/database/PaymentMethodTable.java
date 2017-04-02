@@ -1,5 +1,6 @@
 package com.tigersale.database;
 
+import com.tigersale.model.CustomerUser;
 import com.tigersale.model.PaymentMethod;
 
 import java.sql.ResultSet;
@@ -10,6 +11,9 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by ermam on 3/22/2017 for the tigersale.com application.
@@ -53,6 +57,116 @@ public class PaymentMethodTable {
         {
             return name;
         }
+    }
+
+
+    /**'
+     * Removes a payment method from the table
+     *
+     * @param paymentMethod The payment method to remove
+     *
+     * @return The number of rows updated
+     */
+    public static int deletePaymentMethod(PaymentMethod paymentMethod)
+    {
+        int numChanged = 0;
+        try {
+            PreparedStatement deleteStatement = DatabaseConnection.conn.prepareStatement("DELETE FROM " +
+                    TABLE_NAME + " WHERE " + Fields.PaymentMethodName + " = ? AND " + Fields.CustomerUsername + " = ?");
+
+            deleteStatement.setString(1, paymentMethod.paymentMethodName);
+            deleteStatement.setString(2, paymentMethod.customerUsername);
+            numChanged = deleteStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return numChanged;
+    }
+
+    /**
+     * Inserts a payment method into the table
+     *
+     * @param paymentMethodName The name of the payment method
+     * @param nameOnCard The name on the card
+     * @param creditCardNumber The credit card number
+     * @param cvcCode The cvc code for the card
+     * @param expirationDate The expiration date for the card
+     * @param user The user who is adding the card
+     *
+     * @return The number of rows updated
+     */
+    public static int insertPaymentMethod(String paymentMethodName, String nameOnCard, String creditCardNumber,
+                                          String cvcCode, String expirationDate, CustomerUser user)
+    {
+        int numChanged = 0;
+        try {
+            PreparedStatement insertStatement = DatabaseConnection.conn.prepareStatement("INSERT INTO " +
+                    TABLE_NAME + "("+ Fields.PaymentMethodName + "," + Fields.CustomerUsername+ "," + Fields.NameOnCard+ "," +
+                    Fields.CreditCardNumber + "," + Fields.CVCCode + "," + Fields.ExpirationDate + ") VALUES (?,?,?,?,?,?)");
+
+            insertStatement.setString(1, paymentMethodName);
+            insertStatement.setString(2, user.customerUsername);
+            insertStatement.setString(3, nameOnCard);
+            insertStatement.setString(4, creditCardNumber);
+            insertStatement.setString(5, cvcCode);
+            insertStatement.setString(6, expirationDate);
+            numChanged = insertStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return numChanged;
+    }
+
+
+    /**
+     * Returns a list of all of the payment methods for a Customer User
+     *
+     * @param user The user to search for payment methods for
+     *
+     * @return A list of payment methods for the user
+     */
+    public static List<PaymentMethod> getPaymentMethods(CustomerUser user)
+    {
+        ArrayList<PaymentMethod> paymentMethods = new ArrayList<>();
+        try {
+            PreparedStatement searchStatement = DatabaseConnection.conn.prepareStatement("SELECT * FROM " +
+                    TABLE_NAME + " WHERE " + Fields.CustomerUsername + " = ?");
+            searchStatement.setString(1, user.customerUsername);
+            ResultSet rs = searchStatement.executeQuery();
+            while(rs.next())
+            {
+                paymentMethods.add(paymentMethodFromResultSet(rs));
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return paymentMethods;
+    }
+
+    /**
+     * Creates a payment method from the given result set
+     *
+     * @param rs A result set containing a payment method
+     *
+     * @return A payment method from the current result
+     * @throws SQLException If there are any missing columns that are requested here
+     */
+    protected static PaymentMethod paymentMethodFromResultSet(ResultSet rs) throws SQLException
+    {
+        String paymentMethodName = rs.getString(Fields.PaymentMethodName.toString());
+        String customerUsername = rs.getString(Fields.CustomerUsername.toString());
+        String nameOnCard = rs.getString(Fields.NameOnCard.toString());
+        String creditCardNumber = rs.getString(Fields.CreditCardNumber.toString());
+        String cvcCode = rs.getString(Fields.CVCCode.toString());
+        String expirationDate = rs.getString(Fields.ExpirationDate.toString());
+
+        return new PaymentMethod(paymentMethodName, customerUsername, nameOnCard, creditCardNumber, cvcCode, expirationDate);
     }
 
     /**

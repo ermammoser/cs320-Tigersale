@@ -30,12 +30,12 @@ public class InventoryManagerTable {
      */
     public enum Fields
     {
-        Username("TransactionId"),
-        Password("Cost"),
-        Salary("Status"),
-        HireDate("AddressId"),
-        FirstName("Brand"),
-        LastName("Category"),
+        Username("Username"),
+        Password("Password"),
+        Salary("Salary"),
+        HireDate("HireDate"),
+        FirstName("FirstName"),
+        LastName("LastName"),
         MiddleInitial("MiddleInitial");
 
         String name;
