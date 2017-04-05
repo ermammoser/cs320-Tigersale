@@ -12,5 +12,6 @@ public class Tigersale {
     public static void main(String []args)
     {
         DatabaseConnection.initializeConnection(true);
+        System.out.println("Tigersale");
     }
 }
