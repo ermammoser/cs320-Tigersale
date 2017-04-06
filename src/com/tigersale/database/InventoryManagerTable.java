@@ -57,17 +57,17 @@ public class InventoryManagerTable {
     /**
      * Checks if the supplied credentials match a user. If so, return that user.
      *
-     * @param username The username of the customer user
-     * @param password The password of the customer user
+     * @param username The username of the inventory manager
+     * @param password The password of the inventory manager
      *
-     * @return The customer user if it exists
+     * @return The inventory manager if it exists
      */
     public static InventoryManager login(String username, String password)
     {
         InventoryManager inventoryManager = null;
         try {
             PreparedStatement searchStatement = DatabaseConnection.conn.prepareStatement("SELECT * FROM " +
-                    TABLE_NAME + " WHERE " + Fields.Username + " = ? AND " + InventoryManagerTable.Fields.Password + " = ?");
+                    TABLE_NAME + " WHERE " + Fields.Username + " = ? AND " + Fields.Password + " = ?");
             searchStatement.setString(1, username);
             searchStatement.setString(2, password);
             ResultSet rs = searchStatement.executeQuery();
@@ -82,16 +82,42 @@ public class InventoryManagerTable {
         return inventoryManager;
     }
 
+
     /**
-     * Inserts a new customer user into the table.  This should be used to register a new user
+     * Returns whether or not the username is available
      *
-     * @param username The customer's username
-     * @param password The customer's password
-     * @param salary   The manager's salary
-     * @param hireDate The customer's date of birth
-     * @param firstName The customer's first name
-     * @param lastName The customer's last name
-     * @param middleInitial The customer's middle initial
+     * @param username The username in question
+     *
+     * @return Whether or not the username is available
+     */
+    public static boolean usernameAvaliable(String username)
+    {
+        boolean available = false;
+        try {
+            PreparedStatement searchStatement = DatabaseConnection.conn.prepareStatement("SELECT * FROM " +
+                    TABLE_NAME + " WHERE " + Fields.Username + " = ?");
+            searchStatement.setString(1, username);
+            ResultSet rs = searchStatement.executeQuery();
+            available = !rs.next();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return available;
+    }
+
+
+    /**
+     * Inserts a new inventory manager into the table.  This should be used to register a new inventory manager
+     *
+     * @param username The inventory manager username
+     * @param password The inventory manager password
+     * @param salary   The inventory manager salary
+     * @param hireDate The inventory manager hire date
+     * @param firstName The inventory manager first name
+     * @param lastName The inventory manager last name
+     * @param middleInitial The inventory manager middle initial
      *
      * @return How many rows were updated
      */
@@ -102,7 +128,7 @@ public class InventoryManagerTable {
         try {
             PreparedStatement insertStatement = DatabaseConnection.conn.prepareStatement("INSERT INTO " +
                     TABLE_NAME + "("+ Fields.Username + "," + Fields.Password+ "," + Fields.Salary + "," + Fields.HireDate + "," +
-                    Fields.FirstName + "," + Fields.LastName + "," + Fields.MiddleInitial + ") VALUES (?,?,?,?,?,?)");
+                    Fields.FirstName + "," + Fields.LastName + "," + Fields.MiddleInitial + ") VALUES (?,?,?,?,?,?,?)");
 
             insertStatement.setString(1, username);
             insertStatement.setString(2, password);
@@ -123,9 +149,10 @@ public class InventoryManagerTable {
     /**
      * Creates a customer user from the given result set
      *
-     * @param rs A result set containing a customer user
+     * @param rs A result set containing a inventory manager
      *
-     * @return A customer user from the current result
+     * @return A inventory manager from the current result
+     *
      * @throws SQLException If there are any missing columns that are requested here
      */
     protected static InventoryManager inventoryManagerFromResultSet(ResultSet rs) throws SQLException
