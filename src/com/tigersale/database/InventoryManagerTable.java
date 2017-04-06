@@ -1,6 +1,8 @@
 package com.tigersale.database;
 
+
 import com.tigersale.model.InventoryManager;
+import com.tigersale.model.Product;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -50,6 +52,93 @@ public class InventoryManagerTable {
         {
             return name;
         }
+    }
+
+    /**
+     * Checks if the supplied credentials match a user. If so, return that user.
+     *
+     * @param username The username of the customer user
+     * @param password The password of the customer user
+     *
+     * @return The customer user if it exists
+     */
+    public static InventoryManager login(String username, String password)
+    {
+        InventoryManager inventoryManager = null;
+        try {
+            PreparedStatement searchStatement = DatabaseConnection.conn.prepareStatement("SELECT * FROM " +
+                    TABLE_NAME + " WHERE " + Fields.Username + " = ? AND " + InventoryManagerTable.Fields.Password + " = ?");
+            searchStatement.setString(1, username);
+            searchStatement.setString(2, password);
+            ResultSet rs = searchStatement.executeQuery();
+            if(rs.next()) {
+                inventoryManager = inventoryManagerFromResultSet(rs);
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return inventoryManager;
+    }
+
+    /**
+     * Inserts a new customer user into the table.  This should be used to register a new user
+     *
+     * @param username The customer's username
+     * @param password The customer's password
+     * @param salary   The manager's salary
+     * @param hireDate The customer's date of birth
+     * @param firstName The customer's first name
+     * @param lastName The customer's last name
+     * @param middleInitial The customer's middle initial
+     *
+     * @return How many rows were updated
+     */
+    public static int insertInventoryManager(String username, String password, int salary, Date hireDate, String firstName,
+                                         String lastName, String middleInitial)
+    {
+        int numChanged = 0;
+        try {
+            PreparedStatement insertStatement = DatabaseConnection.conn.prepareStatement("INSERT INTO " +
+                    TABLE_NAME + "("+ Fields.Username + "," + Fields.Password+ "," + Fields.Salary + "," + Fields.HireDate + "," +
+                    Fields.FirstName + "," + Fields.LastName + "," + Fields.MiddleInitial + ") VALUES (?,?,?,?,?,?)");
+
+            insertStatement.setString(1, username);
+            insertStatement.setString(2, password);
+            insertStatement.setInt(3, salary);
+            insertStatement.setDate(4, hireDate);
+            insertStatement.setString(5, firstName);
+            insertStatement.setString(6, lastName);
+            insertStatement.setString(7, middleInitial);
+            numChanged = insertStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return numChanged;
+    }
+
+    /**
+     * Creates a customer user from the given result set
+     *
+     * @param rs A result set containing a customer user
+     *
+     * @return A customer user from the current result
+     * @throws SQLException If there are any missing columns that are requested here
+     */
+    protected static InventoryManager inventoryManagerFromResultSet(ResultSet rs) throws SQLException
+    {
+        String username = rs.getString(Fields.Username.toString());
+        String password = rs.getString(Fields.Password.toString());
+        int salary = rs.getInt(Fields.Salary.toString());
+        Date hireDate = rs.getDate(Fields.HireDate.toString());
+        String firstName = rs.getString(Fields.FirstName.toString());
+        String lastName = rs.getString(Fields.LastName.toString());
+        String middleInitial = rs.getString(Fields.MiddleInitial.toString());
+
+        return new InventoryManager(username, password, salary, hireDate, firstName, lastName, middleInitial);
     }
 
     /**
