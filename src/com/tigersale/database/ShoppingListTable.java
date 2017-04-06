@@ -1,5 +1,9 @@
 package com.tigersale.database;
 
+import com.tigersale.model.CustomerUser;
+import com.tigersale.model.Product;
+import javafx.util.Pair;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ermam on 3/22/2017 for the tigersale.com application.
@@ -32,7 +38,7 @@ public class ShoppingListTable {
     public enum Fields
     {
         CustomerUsername("CustomerUsername"),
-        ProductId("TransactionId"),
+        ProductId("ProductId"),
         Amount("Amount");
 
         String name;
@@ -50,6 +56,151 @@ public class ShoppingListTable {
     }
 
     /**
+     * Adds a product to a user's shopping cart
+     *
+     * @param user The user's cart to add it to
+     * @param product The product to add to the shopping cart
+     *
+     * @return The number of rows changed
+     */
+    public static int addProduct(CustomerUser user, Product product)
+    {
+        int numChanged = 0;
+        try {
+            PreparedStatement insertStatement = DatabaseConnection.conn.prepareStatement("INSERT INTO " +
+                    TABLE_NAME + "("+ Fields.CustomerUsername + "," + Fields.ProductId + "," + Fields.Amount + ") VALUES (?,?,?)");
+
+            insertStatement.setString(1, user.customerUsername);
+            insertStatement.setInt(2, product.productId);
+            insertStatement.setInt(3, 1);
+            numChanged = insertStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return numChanged;
+    }
+
+
+    /**
+     * Change the amount of a product that the user wants in their list
+     *
+     * @param user The user's cart to modify
+     * @param product The product to modify in the shopping cart
+     * @param amount The amount of the product to change to
+     *
+     * @return The number of rows changed
+     */
+    public static int changeAmountOfProduct(CustomerUser user, Product product, int amount)
+    {
+        if(amount == 0)
+        {
+            return deleteProduct(user, product);
+        }
+
+        int numChanged = 0;
+        try {
+            PreparedStatement insertStatement = DatabaseConnection.conn.prepareStatement("UPDATE " +
+                    TABLE_NAME + " SET " + Fields.Amount + " = ? " +
+                    " WHERE " + Fields.CustomerUsername + " = ? AND " + Fields.ProductId + " = ?");
+
+            insertStatement.setInt(1, amount);
+            insertStatement.setString(2, user.customerUsername);
+            insertStatement.setInt(3, product.productId);
+            numChanged = insertStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return numChanged;
+    }
+
+    /**
+     * Removes a product from the user's shopping list
+     *
+     * @param user The user whos shopping list is being changed
+     * @param product The product to remove
+     *
+     * @return The number of rows to update
+     */
+    public static int deleteProduct(CustomerUser user, Product product)
+    {
+        int numChanged = 0;
+        try {
+            PreparedStatement deleteStatement = DatabaseConnection.conn.prepareStatement("DELETE FROM " +
+                    TABLE_NAME + " WHERE " + Fields.CustomerUsername + " = ? AND " + Fields.ProductId + " = ?");
+
+            deleteStatement.setString(1, user.customerUsername);
+            deleteStatement.setInt(2, product.productId);
+            numChanged = deleteStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return numChanged;
+    }
+
+    /**
+     * Clears a user's shopping list
+     *
+     * @param user The user who's shopping list is being cleared
+     *
+     * @return The number of changed rows
+     */
+    public static int clearShoppingList(CustomerUser user)
+    {
+        int numChanged = 0;
+        try {
+            PreparedStatement deleteStatement = DatabaseConnection.conn.prepareStatement("DELETE FROM " +
+                    TABLE_NAME + " WHERE " + Fields.CustomerUsername + " = ?");
+
+            deleteStatement.setString(1, user.customerUsername);
+            numChanged = deleteStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return numChanged;
+    }
+
+    /**
+     * Returns a list of all products in the user's shopping list
+     *
+     * @param user The user to remove products from
+     *
+     * @return A list of pairs where the key is the product and the value is the amount of product
+     */
+    public static List<Pair<Product, Integer>> getShoppingList(CustomerUser user)
+    {
+        ArrayList<Pair<Product, Integer>> shoppingList  = new ArrayList<>();
+        try {
+            PreparedStatement searchStatement = DatabaseConnection.conn.prepareStatement("SELECT * FROM " +
+                    TABLE_NAME + ", " + ProductTable.TABLE_NAME +
+                    " WHERE " + Fields.CustomerUsername + " = ? AND " +
+                    TABLE_NAME + "." + Fields.ProductId + " = " + ProductTable.TABLE_NAME + "." + ProductTable.Fields.ProductId);
+            searchStatement.setString(1, user.customerUsername);
+            ResultSet rs = searchStatement.executeQuery();
+            while(rs.next())
+            {
+                shoppingList.add(new Pair(ProductTable.productFromResultSet(rs), rs.getInt(Fields.Amount.toString())));
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return shoppingList;
+    }
+
+
+
+
+
+    /**
      * Creates and populates the Shopping List table in the database
      */
     protected static void createTable()
@@ -59,6 +210,7 @@ public class ShoppingListTable {
                     + Fields.CustomerUsername + " VARCHAR(30),"
                     + Fields.ProductId + " INTEGER,"
                     + Fields.Amount + " INTEGER,"
+                    + "check(Amount > 0),"
                     + "PRIMARY KEY (" + Fields.CustomerUsername + "," + Fields.ProductId + "),"
                     + "FOREIGN KEY (" + Fields.CustomerUsername + ") REFERENCES " + CustomerUserTable.TABLE_NAME + "(" + CustomerUserTable.Fields.CustomerUsername + "),"
                     + "FOREIGN KEY (" + Fields.ProductId + ") REFERENCES " + ProductTable.TABLE_NAME + "(" + ProductTable.Fields.ProductId + ")"
