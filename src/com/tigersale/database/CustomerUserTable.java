@@ -140,41 +140,7 @@ public class CustomerUserTable {
         return available;
     }
 
-    /**
-     * Inserts a new customer user into the table.  This should be used to register a new user
-     *
-     * @param customerUsername The customer's username
-     * @param password The customer's password
-     * @param dateOfBirth The customer's date of birth
-     * @param firstName The customer's first name
-     * @param lastName The customer's last name
-     * @param middleInitial The customer's middle initial
-     *
-     * @return How many rows were updated
-     */
-    public static int insertCustomerUser(String customerUsername, String password, Date dateOfBirth, String firstName,
-                                         String lastName, String middleInitial)
-    {
-        int numChanged = 0;
-        try {
-            PreparedStatement insertStatement = DatabaseConnection.conn.prepareStatement("INSERT INTO " +
-                    TABLE_NAME + "("+ Fields.CustomerUsername + "," + Fields.Password+ "," + Fields.DateOfBirth+ "," +
-                    Fields.FirstName + "," + Fields.LastName + "," + Fields.MiddleInitial + ") VALUES (?,?,?,?,?,?)");
 
-            insertStatement.setString(1, customerUsername);
-            insertStatement.setString(2, password);
-            insertStatement.setDate(3, dateOfBirth);
-            insertStatement.setString(4, firstName);
-            insertStatement.setString(5, lastName);
-            insertStatement.setString(6, middleInitial);
-            numChanged = insertStatement.executeUpdate();
-        }
-        catch(SQLException e)
-        {
-            e.printStackTrace();
-        }
-        return numChanged;
-    }
 
     /**
      * Creates a customer user from the given result set
