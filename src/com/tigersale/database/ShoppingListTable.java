@@ -196,10 +196,6 @@ public class ShoppingListTable {
         return shoppingList;
     }
 
-
-
-
-
     /**
      * Creates and populates the Shopping List table in the database
      */

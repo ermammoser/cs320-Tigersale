@@ -43,22 +43,22 @@ public class Order {
     public Date date;
     public double cost;
     public Status status;
-    public int addressId;
+    public Address address;
     public String customerUsername;
 
-    public Order(int transactionId, Date date, double cost, Status status, int addressId, String customerUsername)
+    public Order(int transactionId, Date date, double cost, Status status, Address address, String customerUsername)
     {
         this.transactionId = transactionId;
         this.date = date;
         this.cost = cost;
         this.status = status;
-        this.addressId = addressId;
+        this.address = address;
         this.customerUsername = customerUsername;
     }
 
     @Override
     public String toString()
     {
-        return transactionId + "-" + date + ": " + cost + ", " + status + ", " + addressId + ", " + customerUsername;
+        return transactionId + "-" + date + ": " + cost + ", " + status + ", " + address + ", " + customerUsername;
     }
 }
