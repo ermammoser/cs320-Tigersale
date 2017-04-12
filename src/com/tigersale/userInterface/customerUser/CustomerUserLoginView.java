@@ -33,7 +33,7 @@ public class CustomerUserLoginView extends AbstractView{
         while(true)
         {
 
-            System.out.println("Please choose from the following options (Type the number corresponding to your choice):");
+            System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
             System.out.println("0: Go Back");
             System.out.println("1: Login");
             System.out.println("2: Register");
@@ -44,7 +44,7 @@ public class CustomerUserLoginView extends AbstractView{
             }
             catch(InputMismatchException e)
             {
-                System.out.println("Please type in an integer corresponding to your preferred option.");
+                System.out.println("Enter an integer corresponding to your preferred option.");
                 scanner.next();
                 continue;
             }
