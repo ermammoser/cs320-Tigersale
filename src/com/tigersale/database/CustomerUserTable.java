@@ -171,7 +171,7 @@ public class CustomerUserTable {
         }
         catch(SQLException e)
         {
-            e.printStackTrace();
+            System.out.println("Could not register the new user: " + e.getMessage());
         }
         return numChanged;
     }
