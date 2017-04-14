@@ -38,7 +38,19 @@ public class DatabaseConnection {
             }
             else
             {
-                createNewDatabase = !FileUtils.exists(DATABASE_LOCATION);
+                if(FileUtils.exists(DATABASE_LOCATION)) {
+                    if (FileUtils.exists(DATABASE_LOCATION + File.separator + DATABASE_NAME + ".mv.db")) {
+                        if (FileUtils.size(DATABASE_LOCATION + File.separator + DATABASE_NAME + ".mv.db") == 0) {
+                            createNewDatabase = true;
+                        }
+                    } else {
+                        createNewDatabase = true;
+                    }
+                }
+                else
+                {
+                    createNewDatabase = true;
+                }
             }
 
             // The location and date of the database
