@@ -2,6 +2,7 @@ package com.tigersale.userInterface.customerUser;
 
 import com.tigersale.model.CustomerUser;
 import com.tigersale.userInterface.AbstractView;
+import com.tigersale.userInterface.WelcomeView;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -31,7 +32,7 @@ public class CustomerUserHomeView extends AbstractView{
     /**
      * This method represents the logged in users home view
      */
-    public void runCustomerUserHomeView()
+    public void runCustomerUserHomeView(CustomerUser user)
     {
         int choice = 0;
 
@@ -42,7 +43,13 @@ public class CustomerUserHomeView extends AbstractView{
         while(true)
         {
             System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
-            System.out.println("0: Logout");
+            System.out.println("0: Go Back");
+            System.out.println("1: View Products");
+            System.out.println("2: View/Edit Payment Methods");
+            System.out.println("3: View/Edit  Addresses");
+            //Current and past orders
+            System.out.println("4: View Orders");
+            System.out.println("5: Logout");
 
             // Try to get a numeric response from the user
             try {
@@ -55,11 +62,22 @@ public class CustomerUserHomeView extends AbstractView{
                 continue;
             }
 
+            Scanner scanner = new Scanner(System.in);
             switch (choice)
             {
                 // Quit the application
                 case 0:
+                    (new WelcomeView(scanner)).runWelcomeView();
+                    return;
+                case 1:
+                    (new ListOfProductView(scanner)).runListOfProductView(user);
+                    return;
+                case 5:
                     System.out.println("Logging you out.");
+                    // Create the scanner to handle user input
+
+                    // Run the welcome view
+                    (new WelcomeView(scanner)).runWelcomeView();
                     return;
                 default:
                     System.out.println("I am sorry, the option you chose does not exist. Please try again.");
