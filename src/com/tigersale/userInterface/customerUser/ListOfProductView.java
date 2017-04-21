@@ -3,10 +3,8 @@ package com.tigersale.userInterface.customerUser;
 import com.tigersale.database.ProductTable;
 import com.tigersale.database.ShoppingListTable;
 import com.tigersale.model.CustomerUser;
-import com.tigersale.model.Order;
 import com.tigersale.model.Product;
 import com.tigersale.userInterface.AbstractView;
-import javafx.util.Pair;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -19,18 +17,22 @@ import java.util.Scanner;
 public class ListOfProductView extends AbstractView {
 
     /**
+     * The logged in user
+     */
+    private CustomerUser user;
+    /**
      * Constructor for the ListOfProductView
      * @param scanner The scanner to retrieve user input from
      */
-    public ListOfProductView(Scanner scanner) {
+    public ListOfProductView(Scanner scanner, CustomerUser user) {
         super(scanner);
+        this.user = user;
     }
 
     /**
      * This method acts as the view for the CustomerUser to view the Product list
-     * @param user the working CustomerUser
      */
-    public void runListOfProductView(CustomerUser user) {
+    public void runListOfProductView() {
         while (true) {
             System.out.println("=========================================================");
             System.out.println("                     List of Products                    ");
@@ -47,17 +49,19 @@ public class ListOfProductView extends AbstractView {
                 return;
             } else
             {
+                System.out.println("Please type in an integer corresponding to your preferred option.");
+                System.out.println(0 + ": Go Back");
+                System.out.println(1 + ": View Shopping List");
+                System.out.println("OR");
+                System.out.println("-----------------------------------------------------");
                 //Print all the products with associated numbers
                 System.out.println("Please choose the number associated with the product to view detail:");
                 int i = 0;
                 while (i < size) {
-                    System.out.println(i + ": " + products.get(i).name);
+                    System.out.println((i+2) + ": " + products.get(i).name);
                     i++;
                 }
-                System.out.println("OR");
-                System.out.println("Please type in an integer corresponding to your preferred option.");
-                System.out.println(size + ": Go Back");
-                System.out.println((size + 1) + ": View Shopping List");
+
 
                 // Try to get a numeric response from the user
                 try {
@@ -67,27 +71,25 @@ public class ListOfProductView extends AbstractView {
                     scanner.next();
                     continue;
                 }
+
                 //Invalid option
                 if (choice > (size + 1))
                 {
                     System.out.println("I am sorry, the option you chose does not exist. Please try again.");
                     continue;
                 }
-                //View detail of the chosen product
-                if (choice < size)
+                //Valid option, view detail of the chosen product
+                if (choice == 0)
                 {
-                    Product chosen = products.get(choice);
-                    viewProductDetail(user, chosen);
-                }
-                //Go Back to CustomerUserHomeView
-                else if (choice == size)
+                    return;
+                } else if (choice == 1)
                 {
-                    (new CustomerUserHomeView(scanner, user)).runCustomerUserHomeView(user);
-                }
-                //View Shopping List
-                else if (choice == (size + 1))
+                    (new ShoppingListView(scanner, user)).runShoppingListView();
+                } else
                 {
-                    (new ShoppingListView(scanner)).runShoppingListView(user);
+                    //Product's index = choice - 2 because we have used 0 and 1 for other options above
+                    Product chosen = products.get(choice-2);
+                    viewProductDetail(chosen);
                 }
             }
         }
@@ -96,25 +98,24 @@ public class ListOfProductView extends AbstractView {
 
     /**
      * This method acts as a Product Detail view for CustomerUser
-     * @param user the working CustomerUser
      * @param chosen the chosen Product to view detail
      */
-    private void viewProductDetail(CustomerUser user, Product chosen)
-    {
-        System.out.println("=========================================================");
-        System.out.println("                     Product Detail                      ");
-        System.out.println("=========================================================");
-        System.out.println(chosen.toString());
-        System.out.println("---------------------------------------------------------");
-        System.out.println("Do you want to add this product to your shopping list?");
-        System.out.println("0: No. Bring me back to Product List");
-        System.out.println("1: Yes");
-
-
-        int choice = 2;
-        // Try to get a numeric response from the user
+    private void viewProductDetail(Product chosen) {
         while (true)
         {
+            System.out.println("=========================================================");
+            System.out.println("                     Product Detail                      ");
+            System.out.println("=========================================================");
+            System.out.println(chosen.toString());
+            System.out.println("------------------------------------------------------------");
+            System.out.println("Do you want to add this product to your shopping list?");
+            System.out.println("0: No. Bring me back to Product List");
+            System.out.println("1: Yes");
+
+
+            int choice;
+            // Try to get a numeric response from the user
+
             try
             {
                 choice = scanner.nextInt();
@@ -124,37 +125,35 @@ public class ListOfProductView extends AbstractView {
                 scanner.next();
                 continue;
             }
-            //Invalid choice:
+            //Invalid option:
             if (choice > 1)
             {
                 System.out.println("I am sorry, the option you chose does not exist. Please try again.");
                 continue;
             }
+            //Valid option:
             switch (choice)
             {
                 //Go Back to ListOfProduct view
                 case 0:
-                    runListOfProductView(user);
                     return;
                 //Add the chosen product to Shopping List
                 case 1:
-                    addProductView(user, chosen);
-                    return;
+                    addProductView(chosen);
 
             }
         }
-
     }
+
+
 
     /**
      * This method act as a view for the CustomerUser to add product to the Shopping List
-     * @param user the working CustomerUser
      * @param chosen the chosen Product to add the Shopping List
      */
 
-    private void addProductView(CustomerUser user, Product chosen) {
-        int existingAmount, numchanged, newAmount;
-        int choice = 1;
+    private void addProductView(Product chosen) {
+        int existingAmount, numchanged, newAmount, choice;
         //Ask for a desired amount
         while (true)
         {
@@ -189,23 +188,7 @@ public class ListOfProductView extends AbstractView {
                     System.out.println("Added " + newAmount + " more to " + chosen.name + ". You now have " + (newAmount + existingAmount));
                 }
             }
-            while (true)
-            {
-                System.out.println("Please type '0' to Go Back to Product Detail");
-                try
-                {
-                    choice = scanner.nextInt();
-                } catch (InputMismatchException e)
-                {
-                    scanner.next();
-                    continue;
-                }
-                if (choice == 0)
-                {
-                    viewProductDetail(user, chosen);
-                    return;
-                }
-            }
+            break;
         }
     }
 }

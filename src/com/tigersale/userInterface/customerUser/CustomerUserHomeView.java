@@ -32,16 +32,15 @@ public class CustomerUserHomeView extends AbstractView{
     /**
      * This method represents the logged in users home view
      */
-    public void runCustomerUserHomeView(CustomerUser user)
-    {
+    public void runCustomerUserHomeView() {
         int choice = 0;
 
-        System.out.println("=========================================================");
-        System.out.println("                     Welcome to Home!                    ");
-        System.out.println("=========================================================");
-        System.out.println("Hello " + user.firstName);
-        while(true)
-        {
+        while (true) {
+            System.out.println("=========================================================");
+            System.out.println("                     Welcome to Home!                    ");
+            System.out.println("=========================================================");
+            System.out.println("Hello " + user.firstName);
+
             System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
             System.out.println("0: Go Back");
             System.out.println("1: View Products");
@@ -54,30 +53,22 @@ public class CustomerUserHomeView extends AbstractView{
             // Try to get a numeric response from the user
             try {
                 choice = scanner.nextInt();
-            }
-            catch(InputMismatchException e)
-            {
+            } catch (InputMismatchException e) {
                 System.out.println("Please type in an integer corresponding to your preferred option.");
                 scanner.next();
                 continue;
             }
 
             Scanner scanner = new Scanner(System.in);
-            switch (choice)
-            {
+            switch (choice) {
                 // Quit the application
                 case 0:
-                    (new WelcomeView(scanner)).runWelcomeView();
                     return;
                 case 1:
-                    (new ListOfProductView(scanner)).runListOfProductView(user);
-                    return;
+                    (new ListOfProductView(scanner, user)).runListOfProductView();
+                    break;
                 case 5:
                     System.out.println("Logging you out.");
-                    // Create the scanner to handle user input
-
-                    // Run the welcome view
-                    (new WelcomeView(scanner)).runWelcomeView();
                     return;
                 default:
                     System.out.println("I am sorry, the option you chose does not exist. Please try again.");
@@ -85,5 +76,6 @@ public class CustomerUserHomeView extends AbstractView{
 
             }
         }
+
     }
 }

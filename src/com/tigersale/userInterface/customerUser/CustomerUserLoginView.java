@@ -69,7 +69,7 @@ public class CustomerUserLoginView extends AbstractView{
                     {
                         // Go to CustomerUserHomeView
                         System.out.println("You have successfully logged in.");
-                        (new CustomerUserHomeView(scanner, user)).runCustomerUserHomeView(user);
+                        (new CustomerUserHomeView(scanner, user)).runCustomerUserHomeView();
                     }
                     break;
                 // Register
