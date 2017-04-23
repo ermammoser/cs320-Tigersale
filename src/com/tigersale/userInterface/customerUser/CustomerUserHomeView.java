@@ -62,8 +62,8 @@ public class CustomerUserHomeView extends AbstractView{
                 case 0:
                     System.out.println("Logging you out.");
                     return;
-                case 2:
-                    (new CustomerUserAddressView(scanner, user)).runCustomerUserAdressView();
+                case 3:
+                    (new CustomerUserAddressView(scanner, user)).runCustomerUserAddressView();
                     break;
                 default:
                     System.out.println("I am sorry, the option you chose does not exist. Please try again.");
