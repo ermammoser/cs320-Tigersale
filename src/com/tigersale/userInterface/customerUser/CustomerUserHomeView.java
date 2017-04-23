@@ -43,6 +43,7 @@ public class CustomerUserHomeView extends AbstractView{
         {
             System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
             System.out.println("0: Logout");
+            System.out.println("1: Update Address Information");
 
             // Try to get a numeric response from the user
             try {
@@ -61,6 +62,9 @@ public class CustomerUserHomeView extends AbstractView{
                 case 0:
                     System.out.println("Logging you out.");
                     return;
+                case 2:
+                    (new CustomerUserAddressView(scanner, user)).runCustomerUserAdressView();
+                    break;
                 default:
                     System.out.println("I am sorry, the option you chose does not exist. Please try again.");
                     break;
