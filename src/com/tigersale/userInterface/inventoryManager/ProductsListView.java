@@ -46,6 +46,7 @@ public class ProductsListView extends AbstractView {
 
                 // Add a new product
                 case 1:
+                    (new AddProductView(scanner)).runView();
                     break;
 
                 // Remove a new product
