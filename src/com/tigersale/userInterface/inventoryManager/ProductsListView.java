@@ -49,7 +49,7 @@ public class ProductsListView extends AbstractView {
                     (new AddProductView(scanner)).runView();
                     break;
 
-                // Remove a new product
+                // Remove a product
                 case 2:
                     break;
 

@@ -75,6 +75,7 @@ public class InventoryManagerHomeView extends AbstractView {
 
                 // Remove a new product
                 case 3:
+                    (new RemoveProductView(scanner)).runView();
                     break;
 
                 // Edit product description

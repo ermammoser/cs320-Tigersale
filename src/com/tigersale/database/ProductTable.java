@@ -157,6 +157,30 @@ public class ProductTable {
     }
 
     /**
+     * Removes products with a specified name.
+     * Note: does not match any other fields.
+     *
+     * @param searchString The search string used to identify products (by name)
+     * @return number of items affected
+     */
+    public static int removeProduct(String searchString) {
+        int numChanged = 0;
+
+        try {
+            PreparedStatement removeStatement = DatabaseConnection.conn.prepareStatement(
+                    "DELETE FROM " + TABLE_NAME + " WHERE " + Fields.Name + " LIKE ?"
+            );
+            removeStatement.setString(1, "%" + searchString + "%");
+            numChanged = removeStatement.executeUpdate();
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return numChanged;
+    }
+
+    /**
      * Returns all products in the database
      */
     public static List<Product> viewProducts() {
