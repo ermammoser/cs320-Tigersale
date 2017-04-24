@@ -19,14 +19,15 @@ public class EditProductView extends AbstractView {
 
     public void runView() {
         int choice = 0;
-        Product product;
-
+        Product product = null;
 
         System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
         while(true) {
             System.out.println("0: Go Back");
             System.out.println("1: Edit product description");
             System.out.println("2: Edit price of a product");
+            System.out.println("3: Edit product amount");
+            System.out.println("4: Save and execute changes");
 
             // Try to get a numeric response from the user
             try {
@@ -42,46 +43,55 @@ public class EditProductView extends AbstractView {
                 return;
             }
 
-            // Get product from user's input criteria
-            System.out.println("Input search criteria for product to update.");
-            while(true) {
-                List<Product> productList = ProductTable.searchForProducts(scanner.next());
+            // Only search for new product if no product has been specified yet
+            if(product == null) {
+                // Get product from user's input criteria
+                System.out.println("Input search criteria for product to update.");
+                while (true) {
+                    List<Product> productList = ProductTable.searchForProducts(scanner.next());
 
-                if(productList.size() < 1) {
-                    System.out.println("No products found.");
-                    return;
-                } else if(productList.size() > 1) {
-                    System.out.println("Too many products found. Please narrow search criteria.");
-                } else {
-                    product = productList.get(0);
-                    break;
+                    if (productList.size() < 1) {
+                        System.out.println("No products found.");
+                        return;
+                    } else if (productList.size() > 1) {
+                        System.out.println("Too many products found. Please narrow search criteria.");
+                    } else {
+                        product = productList.get(0);
+                        break;
+                    }
                 }
             }
 
-            // Guard against null (IntelliJ is complaining)
-            if(product == null) {
-                System.out.println("No products found.");
-                return;
-            }
+            switch(choice) {
+                // Edit description
+                case 1:
+                    editDescription(product);
+                    break;
 
-            // Edit description
-            if(choice == 1) {
-                editDescription(product);
-                break;
-            }
+                // Edit price
+                case 2:
+                    editPrice(product);
+                    break;
 
-            // Edit price
-            if(choice == 2) {
-                editPrice(product);
-                break;
+                // Edit amount
+                case 3:
+                    editAmount(product);
+                    break;
+
+                // Save and execute
+                case 4:
+                    int result = ProductTable.updateProductValues(product);
+                    if(result > 0) {
+                        System.out.println("Changes made successfully.");
+                    } else {
+                        System.out.println("There was a problem with making changes");
+                    }
+                    return;
             }
         }
-
-        // Update database
-        ProductTable.updateProductValues(product);
     }
 
-    public void editDescription(Product product) {
+    private void editDescription(Product product) {
         // Display old description
         System.out.println("Current product description.");
         System.out.println(product.description);
@@ -91,7 +101,7 @@ public class EditProductView extends AbstractView {
         product.description = scanner.next();
     }
 
-    public void editPrice(Product product) {
+    private void editPrice(Product product) {
         // Display old price
         System.out.println("Current product price.");
         System.out.println(product.price);
@@ -104,6 +114,23 @@ public class EditProductView extends AbstractView {
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Price must be a decimal number. Please try again.");
+            }
+        }
+    }
+
+    private void editAmount(Product product) {
+        // Display old amount
+        System.out.println("Current product amount.");
+        System.out.println(product.stock);
+
+        // Get new amount
+        System.out.println("Input new amount.");
+        while(true) {
+            try {
+                product.stock = scanner.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Amount must be an integer. Please try again.");
             }
         }
     }
