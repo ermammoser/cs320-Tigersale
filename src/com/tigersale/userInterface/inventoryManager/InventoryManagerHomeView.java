@@ -46,10 +46,11 @@ public class InventoryManagerHomeView extends AbstractView {
             System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
             System.out.println("0: Go Back");
             System.out.println("1: Add a new product");
-            System.out.println("2: Remove a product");
-            System.out.println("3: Edit product description");
-            System.out.println("4: Edit price of a product");
-            System.out.println("5: Register a new account");
+            System.out.println("2: Add a new product");
+            System.out.println("3: Remove a product");
+            System.out.println("4: Edit product description");
+            System.out.println("5: Edit price of a product");
+            System.out.println("6: Register a new account");
 
             // Try to get a numeric response from the user
             try {
@@ -66,24 +67,29 @@ public class InventoryManagerHomeView extends AbstractView {
                     System.out.println("Logging out.");
                     return;
 
-                // Add a new product
+                // View product list
                 case 1:
+                    (new ProductsListView()).runView();
                     break;
 
-                // Remove a new product
+                // Add a new product
                 case 2:
                     break;
 
-                // Edit product description
+                // Remove a new product
                 case 3:
                     break;
 
-                // Edit product price
+                // Edit product description
                 case 4:
                     break;
 
-                // Register new InventoryManager
+                // Edit product price
                 case 5:
+                    break;
+
+                // Register new InventoryManager
+                case 6:
                     (new RegisterInventoryManagerView(scanner)).runView();
                     return;
 
