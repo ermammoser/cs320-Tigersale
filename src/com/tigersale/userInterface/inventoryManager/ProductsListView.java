@@ -19,15 +19,15 @@ public class ProductsListView extends AbstractView {
     public void runView() {
         int choice;
 
-        displayProductList();
+        displayProductList(ProductTable.viewProducts());
 
+        System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
         while(true) {
-            System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
             System.out.println("0: Go Back");
-            System.out.println("1: Add a new product");
-            System.out.println("2: Remove a product");
-            System.out.println("3: Edit product description");
-            System.out.println("4: Edit price of a product");
+            System.out.println("1: Search for products");
+            System.out.println("2: Add a new product");
+            System.out.println("3: Remove a product");
+            System.out.println("4: Edit product description or price");
             System.out.println("5: Display product list");
 
             // Try to get a numeric response from the user
@@ -44,26 +44,32 @@ public class ProductsListView extends AbstractView {
                 case 0:
                     return;
 
-                // Add a new product
+                // Search products
                 case 1:
+                    System.out.println("Input search criteria.");
+                    String searchString = scanner.next();
+                    displayProductList(ProductTable.searchForProducts(searchString));
+
+                    break;
+
+                // Add a new product
+                case 2:
                     (new AddProductView(scanner)).runView();
                     break;
 
                 // Remove a product
-                case 2:
-                    break;
-
-                // Edit product description
                 case 3:
+                    (new RemoveProductView(scanner)).runView();
                     break;
 
-                // Edit product price
+                // Edit product
                 case 4:
+                    (new EditProductView(scanner)).runView();
                     break;
 
                 // Display product list
                 case 5:
-                    displayProductList();
+                    displayProductList(ProductTable.viewProducts());
                     break;
 
                 default:
@@ -73,9 +79,7 @@ public class ProductsListView extends AbstractView {
         }
     }
 
-    public void displayProductList() {
-        List<Product> productList = ProductTable.viewProducts();
-
+    public void displayProductList(List<Product> productList) {
         System.out.println("=========================================================");
         System.out.println("                      Product list!                      ");
         System.out.println("=========================================================");

@@ -1,11 +1,8 @@
 package com.tigersale.userInterface.inventoryManager;
 
-import com.sun.corba.se.impl.io.TypeMismatchException;
-import com.tigersale.database.InventoryManagerTable;
 import com.tigersale.model.InventoryManager;
 import com.tigersale.userInterface.AbstractView;
 
-import java.sql.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -68,26 +65,8 @@ public class InventoryManagerHomeView extends AbstractView {
                     (new ProductsListView(scanner)).runView();
                     break;
 
-                // Add a new product
-                case 2:
-                    (new AddProductView(scanner)).runView();
-                    break;
-
-                // Remove a new product
-                case 3:
-                    (new RemoveProductView(scanner)).runView();
-                    break;
-
-                // Edit product description
-                case 4:
-                    break;
-
-                // Edit product price
-                case 5:
-                    break;
-
                 // Register new InventoryManager
-                case 6:
+                case 2:
                     (new RegisterInventoryManagerView(scanner)).runView();
                     return;
 
