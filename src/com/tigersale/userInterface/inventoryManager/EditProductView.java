@@ -33,6 +33,7 @@ public class EditProductView extends AbstractView {
             // Try to get a numeric response from the user
             try {
                 choice = scanner.nextInt();
+                scanner.skip("\n");
             } catch (InputMismatchException e) {
                 System.out.println("Please type in an integer corresponding to your preferred option.");
                 scanner.next();
@@ -111,7 +112,7 @@ public class EditProductView extends AbstractView {
 
         // Get new description
         System.out.println("Input new description.");
-        product.description = scanner.next();
+        product.description = scanner.nextLine();
     }
 
     private void editPrice(Product product) {
@@ -124,6 +125,7 @@ public class EditProductView extends AbstractView {
         while(true) {
             try {
                 product.price = scanner.nextDouble();
+                scanner.skip("\n");
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Price must be a decimal number. Please try again.");
@@ -141,6 +143,7 @@ public class EditProductView extends AbstractView {
         while(true) {
             try {
                 product.stock = scanner.nextInt();
+                scanner.skip("\n");
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Amount must be an integer. Please try again.");

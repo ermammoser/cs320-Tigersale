@@ -48,6 +48,7 @@ public class InventoryManagerHomeView extends AbstractView {
             // Try to get a numeric response from the user
             try {
                 choice = scanner.nextInt();
+                scanner.skip("\n");
             } catch (InputMismatchException e) {
                 System.out.println("Please type in an integer corresponding to your preferred option.");
                 scanner.next();

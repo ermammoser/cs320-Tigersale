@@ -17,7 +17,7 @@ public class RemoveProductView extends AbstractView {
 
     public void runView() {
         System.out.println("Input name of product to remove.");
-        String productName = scanner.next();
+        String productName = scanner.nextLine();
         int result = ProductTable.removeProduct(productName);
 
         if(result > 0) {
