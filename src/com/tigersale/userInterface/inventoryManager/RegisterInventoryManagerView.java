@@ -25,7 +25,7 @@ public class RegisterInventoryManagerView extends AbstractView {
         String middleInitial;
 
         // Get the username
-        System.out.println("Please type in your username.");
+        System.out.println("Please type in their username.");
         while (true)
         {
             username = scanner.next();
@@ -41,9 +41,9 @@ public class RegisterInventoryManagerView extends AbstractView {
         // Get the password
         while(true)
         {
-            System.out.println("Please type in your desired password.");
+            System.out.println("Please type in their desired password.");
             password = scanner.next();
-            System.out.println("Please confirm your password.");
+            System.out.println("Please confirm their password.");
             String tempPassword = scanner.next();
             if(password.equals(tempPassword))
             {
@@ -55,7 +55,7 @@ public class RegisterInventoryManagerView extends AbstractView {
             }
         }
         // Get salary
-        System.out.println("Please type in your salary.");
+        System.out.println("Please type in their salary.");
         while(true)
         {
             try
@@ -82,17 +82,17 @@ public class RegisterInventoryManagerView extends AbstractView {
             }
             break;
         }
-        System.out.println("Please enter your first name.");
+        System.out.println("Please enter their first name.");
         firstName = scanner.next();
-        System.out.println("Please enter your last name.");
+        System.out.println("Please enter their last name.");
         lastName = scanner.next();
-        System.out.println("Please enter your middle initial.");
+        System.out.println("Please enter their middle initial.");
         middleInitial = scanner.next().substring(0,1);
 
         int result = InventoryManagerTable.insertInventoryManager(username, password, salary, dateOfBirth, firstName, lastName, middleInitial);
 
         if(result > 0) {
-            System.out.println("You have successfully been registered.");
+            System.out.println("New user has successfully been registered.");
         }
         else
         {

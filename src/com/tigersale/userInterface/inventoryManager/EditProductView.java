@@ -25,10 +25,14 @@ public class EditProductView extends AbstractView {
         System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
         while(true) {
             System.out.println("0: Go Back");
-            System.out.println("1: Edit product description");
-            System.out.println("2: Edit price of a product");
-            System.out.println("3: Edit product amount");
-            System.out.println("4: Save and execute changes");
+            System.out.println("1: Select product");
+            System.out.println("2: Edit product description");
+            System.out.println("3: Edit product price");
+            System.out.println("4: Edit product amount");
+            System.out.println("5: Edit product brand");
+            System.out.println("6: Edit product category");
+            System.out.println("7: Remove product");
+            System.out.println("8: Save and execute changes");
 
             // Try to get a numeric response from the user
             try {
@@ -40,49 +44,77 @@ public class EditProductView extends AbstractView {
                 continue;
             }
 
-            // Go back
-            if(choice == 0) {
-                return;
+            if(choice > 1 && product == null) {
+                System.out.println("Must select product before editing information");
+                continue;
             }
 
-            // Only search for new product if no product has been specified yet
-            if(product == null) {
-                // Get product from user's input criteria
-                System.out.println("Input search criteria for product to update.");
-                while (true) {
-                    List<Product> productList = ProductTable.searchForProducts(scanner.next());
-
-                    if (productList.size() < 1) {
-                        System.out.println("No products found.");
-                        return;
-                    } else if (productList.size() > 1) {
-                        System.out.println("Too many products found. Please narrow search criteria.");
-                    } else {
-                        product = productList.get(0);
-                        oldProduct = product.copy();
-                        break;
-                    }
-                }
-            }
-
+            int result = 0;
             switch(choice) {
-                // Edit description
+                // Go back
+                case 0:
+                    return;
+
+                // Select product
                 case 1:
+                    // Get product from user's input criteria
+                    System.out.println("Input search criteria for product to update.");
+                    while (true) {
+                        List<Product> productList = ProductTable.searchForProducts(scanner.next());
+                        scanner.skip("\n");
+
+                        if (productList.size() < 1) {
+                            System.out.println("No products found.");
+                            return;
+                        } else if (productList.size() > 1) {
+                            System.out.println("Too many products found. Please narrow search criteria.");
+                        } else {
+                            product = productList.get(0);
+                            oldProduct = product.copy();
+                            break;
+                        }
+                    }
+
+                // Edit description
+                case 2:
                     editDescription(product);
                     break;
 
                 // Edit price
-                case 2:
+                case 3:
                     editPrice(product);
                     break;
 
                 // Edit amount
-                case 3:
+                case 4:
                     editAmount(product);
                     break;
 
+                // Edit brand
+                case 5:
+                    editBrand(product);
+                    break;
+
+                // Edit category
+                case 6:
+                    editCategory(product);
+                    break;
+
+                // Remove product
+                case 7:
+                    //noinspection ConstantConditions
+                    product.stock = 0;
+                    result = ProductTable.updateProductValues(product);
+
+                    if(result > 0) {
+                        System.out.println(product.name + " successfully removed.");
+                    } else {
+                        System.out.println("There was an error removing " + product.name + ".");
+                    }
+                    break;
+
                 // Save and execute
-                case 4:
+                case 8:
                     // Ask for confirmation
                     System.out.println("\t" + oldProduct);
                     System.out.println("will be changed to");
@@ -94,11 +126,11 @@ public class EditProductView extends AbstractView {
                         break;
                     }
 
-                    int result = ProductTable.updateProductValues(product);
+                    result = ProductTable.updateProductValues(product);
                     if(result > 0) {
                         System.out.println("Changes made successfully.");
                     } else {
-                        System.out.println("There was a problem with making changes");
+                        System.out.println("There was a problem making changes.");
                     }
                     return;
             }
@@ -149,5 +181,25 @@ public class EditProductView extends AbstractView {
                 System.out.println("Amount must be an integer. Please try again.");
             }
         }
+    }
+
+    private void editBrand(Product product) {
+        // Display old brand
+        System.out.println("Current product brand.");
+        System.out.println(product.brand);
+
+        // Get new brand
+        System.out.println("Input new brand.");
+        product.brand = scanner.nextLine();
+    }
+
+    private void editCategory(Product product) {
+        // Display old category
+        System.out.println("Current product category.");
+        System.out.println(product.category);
+
+        // Get new category
+        System.out.println("Input new category.");
+        product.category = scanner.nextLine();
     }
 }

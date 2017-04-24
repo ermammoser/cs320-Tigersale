@@ -26,9 +26,8 @@ public class ProductsListView extends AbstractView {
             System.out.println("0: Go Back");
             System.out.println("1: Search for products");
             System.out.println("2: Add a new product");
-            System.out.println("3: Remove a product");
-            System.out.println("4: Edit product description or price");
-            System.out.println("5: Display product list");
+            System.out.println("3: Edit product information");
+            System.out.println("4: Display product list");
 
             // Try to get a numeric response from the user
             try {
@@ -58,18 +57,13 @@ public class ProductsListView extends AbstractView {
                     (new AddProductView(scanner)).runView();
                     break;
 
-                // Remove a product
-                case 3:
-                    (new RemoveProductView(scanner)).runView();
-                    break;
-
                 // Edit product
-                case 4:
+                case 3:
                     (new EditProductView(scanner)).runView();
                     break;
 
                 // Display product list
-                case 5:
+                case 4:
                     displayProductList(ProductTable.viewProducts());
                     break;
 
