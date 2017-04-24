@@ -1,11 +1,9 @@
 package com.tigersale.userInterface.inventoryManager;
 
-import com.sun.corba.se.impl.io.TypeMismatchException;
 import com.tigersale.database.InventoryManagerTable;
 import com.tigersale.model.InventoryManager;
 import com.tigersale.userInterface.AbstractView;
 
-import java.sql.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -60,15 +58,14 @@ public class InventoryManagerLoginView extends AbstractView {
                     }
                     else
                     {
-                        // Go to CustomerUserHomeView
+                        // Go to InventoryManagerHomeView
                         System.out.println("You have successfully logged in.");
-                        //(new InventoryManagerHomeView(scanner, user)).runCustomerUserHomeView();
+                        (new InventoryManagerHomeView(scanner, user)).runView();
                     }
                     break;
                 default:
                     System.out.println("I am sorry, the option you chose does not exist. Please try again.");
                     break;
-
             }
         }
     }
