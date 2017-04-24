@@ -25,6 +25,12 @@ public class Product {
         this.category = category;
     }
 
+    public Product copy() {
+        return new Product(
+                this.productId, this.name, this.description, this.price, this.stock, this.brand, this.category
+        );
+    }
+
     @Override
     public String toString()
     {

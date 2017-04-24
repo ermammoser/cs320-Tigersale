@@ -20,6 +20,7 @@ public class EditProductView extends AbstractView {
     public void runView() {
         int choice = 0;
         Product product = null;
+        Product oldProduct = null;
 
         System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
         while(true) {
@@ -57,6 +58,7 @@ public class EditProductView extends AbstractView {
                         System.out.println("Too many products found. Please narrow search criteria.");
                     } else {
                         product = productList.get(0);
+                        oldProduct = product.copy();
                         break;
                     }
                 }
@@ -80,6 +82,17 @@ public class EditProductView extends AbstractView {
 
                 // Save and execute
                 case 4:
+                    // Ask for confirmation
+                    System.out.println("\t" + oldProduct);
+                    System.out.println("will be changed to");
+                    System.out.println("\t" + product);
+                    System.out.println("Are you sure you want to update?");
+                    String confirm = scanner.next();
+                    if(confirm.charAt(0) != 'Y') {
+                        System.out.println("Update aborted.");
+                        break;
+                    }
+
                     int result = ProductTable.updateProductValues(product);
                     if(result > 0) {
                         System.out.println("Changes made successfully.");
