@@ -6,8 +6,10 @@ import com.tigersale.model.CustomerUser;
 import com.tigersale.userInterface.AbstractView;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
+import static com.tigersale.database.AddressTable.deleteAddress;
 import static com.tigersale.database.AddressTable.getAddresses;
 import static com.tigersale.database.AddressTable.insertAddress;
 
@@ -45,6 +47,8 @@ public class CustomerUserAddressView extends AbstractView {
             }
 
             switch (choice) {
+
+
                 // Exit this view
                 case 0:
                     return;
@@ -64,7 +68,43 @@ public class CustomerUserAddressView extends AbstractView {
                     insertAddress(street, city, state, zip, user);
 
                     break;
-                // Register
+
+                // Update an existing address
+                case 2:
+                    System.out.println("Your current addresses:\n");
+                    int addrNum = 0;
+                    List<Address> addressList = getAddresses(user);
+
+                    for(Address adr: addressList){
+                        System.out.println("\nAddress #" + addrNum);
+                        System.out.println("Street:\t\t" + adr.street);
+                        System.out.println("City:\t\t" + adr.city);
+                        System.out.println("State:\t\t" + adr.state);
+                        System.out.println("Zip Code:\t" + adr.zipCode);
+                        addrNum++;
+                    }
+
+                    System.out.println("Enter the address number to remove.");
+
+                    int killChoice = 0;
+                    // Try to get a numeric response from the user
+                    try {
+
+                        killChoice = scanner.nextInt();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Error! Input must be an integer.");
+                        break;
+                    }
+
+                    if(killChoice >= addressList.size()){
+                        System.out.println("Error! The number entered is too large.");
+                        break;
+                    }
+
+                    deleteAddress(addressList.get(killChoice));
+
+                    System.out.println();
+                    break;
                 case 3:
                     System.out.println("Your addresses:\n");
 
@@ -74,6 +114,7 @@ public class CustomerUserAddressView extends AbstractView {
                         System.out.println("State:\t\t" + adr.state);
                         System.out.println("Zip Code:\t" + adr.zipCode);
                     }
+
                     System.out.println();
                     break;
                 default:
