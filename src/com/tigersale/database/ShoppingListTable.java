@@ -63,7 +63,7 @@ public class ShoppingListTable {
      *
      * @return The number of rows changed
      */
-    public static int addProduct(CustomerUser user, Product product)
+    public static int addProduct(CustomerUser user, Product product, int amount)
     {
         int numChanged = 0;
         try {
@@ -72,7 +72,7 @@ public class ShoppingListTable {
 
             insertStatement.setString(1, user.customerUsername);
             insertStatement.setInt(2, product.productId);
-            insertStatement.setInt(3, 1);
+            insertStatement.setInt(3, amount);
             numChanged = insertStatement.executeUpdate();
         }
         catch(SQLException e)
@@ -180,8 +180,7 @@ public class ShoppingListTable {
         try {
             PreparedStatement searchStatement = DatabaseConnection.conn.prepareStatement("SELECT * FROM " +
                     TABLE_NAME + ", " + ProductTable.TABLE_NAME +
-                    " WHERE " + Fields.CustomerUsername + " = ? AND " +
-                    TABLE_NAME + "." + Fields.ProductId + " = " + ProductTable.TABLE_NAME + "." + ProductTable.Fields.ProductId);
+                    " WHERE " + Fields.CustomerUsername + " = ? AND " +  TABLE_NAME + "." + Fields.ProductId + " = " + ProductTable.TABLE_NAME + "." + ProductTable.Fields.ProductId);
             searchStatement.setString(1, user.customerUsername);
             ResultSet rs = searchStatement.executeQuery();
             while(rs.next())
@@ -194,6 +193,36 @@ public class ShoppingListTable {
             e.printStackTrace();
         }
         return shoppingList;
+    }
+
+    /**
+     * Returns a list of all products in the database that satisfy the search string.  This search
+     * checkc the category, brand, name, and description
+     *
+     *
+     * @return List of products that match the search string
+     */
+    public static int searchForAmountOfProducts(CustomerUser user, Product product)
+    {
+        int amount = 0;
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            PreparedStatement searchStatement = DatabaseConnection.conn.prepareStatement("SELECT " + Fields.Amount + " FROM " +
+                    TABLE_NAME + " WHERE " + Fields.CustomerUsername + " = ? AND " + Fields.ProductId + " = ? ");
+            searchStatement.setString(1, user.customerUsername);
+            searchStatement.setInt(2, product.productId);
+
+            ResultSet rs = searchStatement.executeQuery();
+            while(rs.next())
+            {
+                amount = rs.getInt(1);
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return amount;
     }
 
     /**
