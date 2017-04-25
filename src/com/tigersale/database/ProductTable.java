@@ -157,6 +157,23 @@ public class ProductTable {
     }
 
     /**
+     * Returns all products in the database
+     */
+    public static List<Product> viewProducts() {
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            PreparedStatement viewStatement = DatabaseConnection.conn.prepareStatement("SELECT * FROM " + TABLE_NAME);
+            ResultSet rs = viewStatement.executeQuery();
+            while (rs.next()) {
+                products.add(productFromResultSet(rs));
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+    /**
      * Returns a list of all products in the database that satisfy the search string.  This search
      * checkc the category, brand, name, and description
      *

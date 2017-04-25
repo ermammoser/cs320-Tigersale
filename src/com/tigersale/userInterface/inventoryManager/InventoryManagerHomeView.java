@@ -1,29 +1,28 @@
-package com.tigersale.userInterface.customerUser;
+package com.tigersale.userInterface.inventoryManager;
 
-import com.tigersale.model.CustomerUser;
+import com.tigersale.model.InventoryManager;
 import com.tigersale.userInterface.AbstractView;
-import com.tigersale.userInterface.WelcomeView;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * Created by ermam on 4/12/2017. for the tigersale.com application.
+ * @author James Haller
  */
-public class CustomerUserHomeView extends AbstractView{
+public class InventoryManagerHomeView extends AbstractView {
 
     /**
      * The logged in user
      */
-    CustomerUser user;
+    private InventoryManager user;
 
     /**
-     * Constructor for the CustomerUserHomeView
+     * Constructor for the InventoryManagerHomeView
      *
      * @param scanner The scanner to retrieve user input with
      * @param user The logged in user
      */
-    public CustomerUserHomeView(Scanner scanner, CustomerUser user)
+    public InventoryManagerHomeView(Scanner scanner, InventoryManager user)
     {
         super(scanner);
         this.user = user;
@@ -32,7 +31,7 @@ public class CustomerUserHomeView extends AbstractView{
     /**
      * This method represents the logged in users home view
      */
-    public void runCustomerUserHomeView() {
+    public void runView() {
         int choice = 0;
 
         while (true) {
@@ -43,39 +42,40 @@ public class CustomerUserHomeView extends AbstractView{
 
             System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
             System.out.println("0: Go Back");
-            System.out.println("1: View Products");
-            System.out.println("2: View/Edit Payment Methods");
-            System.out.println("3: View/Edit  Addresses");
-            //Current and past orders
-            System.out.println("4: View Orders");
-            System.out.println("5: Logout");
+            System.out.println("1: View/edit product list");
+            System.out.println("2: Register a new account");
 
             // Try to get a numeric response from the user
             try {
                 choice = scanner.nextInt();
+                scanner.skip("\n");
             } catch (InputMismatchException e) {
                 System.out.println("Please type in an integer corresponding to your preferred option.");
                 scanner.next();
                 continue;
             }
 
-            Scanner scanner = new Scanner(System.in);
             switch (choice) {
-                // Quit the application
+                // Go back/log out
                 case 0:
+                    System.out.println("Logging out.");
                     return;
+
+                // View product list
                 case 1:
-                    (new ListOfProductView(scanner, user)).runListOfProductView();
+                    (new ProductsListView(scanner)).runView();
                     break;
-                case 5:
-                    System.out.println("Logging you out.");
+
+                // Register new InventoryManager
+                case 2:
+                    (new RegisterInventoryManagerView(scanner)).runView();
                     return;
+
                 default:
                     System.out.println("I am sorry, the option you chose does not exist. Please try again.");
                     break;
 
             }
         }
-
     }
 }

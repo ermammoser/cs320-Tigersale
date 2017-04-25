@@ -1,6 +1,7 @@
 package com.tigersale.userInterface;
 
 import com.tigersale.userInterface.customerUser.CustomerUserLoginView;
+import com.tigersale.userInterface.inventoryManager.InventoryManagerLoginView;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -62,6 +63,7 @@ public class WelcomeView extends AbstractView{
                     break;
                 // Go to the InventoryManagerLoginView
                 case 2:
+                    (new InventoryManagerLoginView(scanner)).runInventoryManagerLoginView();
                     break;
                 default:
                     System.out.println("I am sorry, the option you chose does not exist. Please try again.");
