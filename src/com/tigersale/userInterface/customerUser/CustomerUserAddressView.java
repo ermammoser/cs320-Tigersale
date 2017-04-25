@@ -55,23 +55,30 @@ public class CustomerUserAddressView extends AbstractView {
 
                 case 1:
                     System.out.println("Please enter your street address.");
+                    System.out.flush();
                     String street = scanner.next();
+
                     System.out.println("Please enter your city.");
+                    System.out.flush();
                     String city = scanner.next();
+
                     System.out.println("Please enter your state.");
+                    System.out.flush();
                     String state = scanner.next();
+
                     System.out.println("Please enter your zip code.");
+                    System.out.flush();
                     String zip = scanner.next();
                     //CustomerUser user = CustomerUserTable.login(username, password);
 
-                    System.out.println("You have successfully added an address.");
+                    System.out.println("You have successfully added an address.\n");
                     insertAddress(street, city, state, zip, user);
 
                     break;
 
                 // Update an existing address
                 case 2:
-                    System.out.println("Your current addresses:\n");
+                    System.out.println("Your current addresses:");
                     int addrNum = 0;
                     List<Address> addressList = getAddresses(user);
 
@@ -84,7 +91,7 @@ public class CustomerUserAddressView extends AbstractView {
                         addrNum++;
                     }
 
-                    System.out.println("Enter the address number to remove.");
+                    System.out.println("Enter the address # to remove.");
 
                     int killChoice = 0;
                     // Try to get a numeric response from the user
@@ -92,12 +99,12 @@ public class CustomerUserAddressView extends AbstractView {
 
                         killChoice = scanner.nextInt();
                     } catch (InputMismatchException e) {
-                        System.out.println("Error! Input must be an integer.");
+                        System.out.println("Error! Input must be an integer.\n");
                         break;
                     }
 
                     if(killChoice >= addressList.size()){
-                        System.out.println("Error! The number entered is too large.");
+                        System.out.println("Error! The number entered is too large.\n");
                         break;
                     }
 
@@ -106,7 +113,7 @@ public class CustomerUserAddressView extends AbstractView {
                     System.out.println();
                     break;
                 case 3:
-                    System.out.println("Your addresses:\n");
+                    System.out.println("Your addresses:");
 
                     for(Address adr: getAddresses(user)){
                         System.out.println("\nStreet:\t\t" + adr.street);
@@ -118,7 +125,7 @@ public class CustomerUserAddressView extends AbstractView {
                     System.out.println();
                     break;
                 default:
-                    System.out.println("I am sorry, the option you chose does not exist. Please try again.");
+                    System.out.println("I am sorry, the option you chose does not exist. Please try again.\n");
                     break;
 
             }
