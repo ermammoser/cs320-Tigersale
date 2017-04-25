@@ -65,7 +65,7 @@ public class CustomerUserPaymentView extends AbstractView{
                     System.out.flush();
                     String cardNumber = scanner.next().trim();
 
-                    while(!isInteger(cardNumber) || cardNumber.length() != 16){
+                    while(cardNumber.length() != 16){//
                         System.out.println("Error! A credit card number must be 16 digits and contain only numbers.");
                         System.out.println("Please enter the card number.");
                         System.out.flush();
@@ -76,7 +76,7 @@ public class CustomerUserPaymentView extends AbstractView{
                     System.out.flush();
                     String cvc = scanner.next();
 
-                    while(!isInteger(cvc) || cvc.length() != 3){
+                    while(cvc.length() != 3){
                         System.out.println("Error! A CVC code must be 3 digits and contain only numbers.\n");
                         System.out.println("Please enter the CVC security code.");
                         System.out.flush();
@@ -111,11 +111,11 @@ public class CustomerUserPaymentView extends AbstractView{
                     for(PaymentMethod pay: paymentList){
                         System.out.println("\nPayment Method #" + payNum);
                         System.out.println("Payment Method Name:\t" + pay.paymentMethodName);
-                        System.out.println("Name on Card:\t\t" + pay.nameOnCard);
-                        System.out.println("Card Number:\t\t" + "XXXX-XXXX-XXXX-"
+                        System.out.println("Name on Card:\t\t\t" + pay.nameOnCard);
+                        System.out.println("Card Number:\t\t\t" + "XXXX-XXXX-XXXX-"
                                 + pay.creditCardNumber.substring(12, 16));
 
-                        System.out.println("Expiration Date:\t" + pay.expirationDate);
+                        System.out.println("Expiration Date:\t\t" + pay.expirationDate);
                         payNum++;
                     }
 
@@ -145,10 +145,10 @@ public class CustomerUserPaymentView extends AbstractView{
 
                     for(PaymentMethod pay: getPaymentMethods(user)){
                         System.out.println("Payment Method Name:\t" + pay.paymentMethodName);
-                        System.out.println("Name on Card:\t\t" + pay.nameOnCard);
-                        System.out.println("Card Number:\t\t" + "XXXX-XXXX-XXXX-"
+                        System.out.println("Name on Card:\t\t\t" + pay.nameOnCard);
+                        System.out.println("Card Number:\t\t\t" + "XXXX-XXXX-XXXX-"
                                 + pay.creditCardNumber.substring(12, 16));
-                        System.out.println("Expiration Date:\t" + pay.expirationDate);
+                        System.out.println("Expiration Date:\t\t" + pay.expirationDate);
                     }
 
                     System.out.println();
@@ -163,11 +163,16 @@ public class CustomerUserPaymentView extends AbstractView{
     }
 
     private static boolean isInteger(String s) {
-        Scanner sc = new Scanner(s.trim());
-        if(!sc.hasNextInt(10)) return false;
-        // we know it starts with a valid int, now make sure
-        // there's nothing left!
-        sc.nextInt(10);
-        return !sc.hasNext();
+
+        try {
+            Integer.parseInt(s);
+        } catch(NumberFormatException e) {
+            return false;
+        } catch(NullPointerException e) {
+            return false;
+        }
+        // only got here if we didn't return false
+        return true;
     }
+
 }
