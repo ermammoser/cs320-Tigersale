@@ -33,7 +33,7 @@ public class CustomerUserAddressView extends AbstractView {
             System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
             System.out.println("0: Go Back");
             System.out.println("1: Add Address Information");
-            System.out.println("2: Update Address Information");
+            System.out.println("2: View/Delete Address Information");
             System.out.println("3: View Current Address Information");
 
             // Try to get a numeric response from the user
@@ -69,7 +69,13 @@ public class CustomerUserAddressView extends AbstractView {
                     System.out.println("Please enter your zip code.");
                     System.out.flush();
                     String zip = scanner.next();
-                    //CustomerUser user = CustomerUserTable.login(username, password);
+
+                    while(zip.length() != 5){
+                        System.out.println("Error! Zip codes must be 5 digits.");
+                        System.out.println("Please enter your zip code.");
+                        System.out.flush();
+                        zip = scanner.next();
+                    }
 
                     System.out.println("You have successfully added an address.\n");
                     insertAddress(street, city, state, zip, user);
@@ -96,7 +102,6 @@ public class CustomerUserAddressView extends AbstractView {
                     int killChoice = 0;
                     // Try to get a numeric response from the user
                     try {
-
                         killChoice = scanner.nextInt();
                     } catch (InputMismatchException e) {
                         System.out.println("Error! Input must be an integer.\n");

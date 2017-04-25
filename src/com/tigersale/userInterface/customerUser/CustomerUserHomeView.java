@@ -43,7 +43,7 @@ public class CustomerUserHomeView extends AbstractView{
         {
             System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
             System.out.println("0: Logout");
-            System.out.println("2: Add/Delete/View Payment Informationjkjk");
+            System.out.println("2: Add/Delete/View Payment Information");
             System.out.println("3: Add/Delete/View Address Information");
 
             // Try to get a numeric response from the user

@@ -55,11 +55,19 @@ public class CustomerUserPaymentView extends AbstractView{
                 case 1:
                     System.out.println("Please enter the payment method name. Example: Debit Card");
                     System.out.flush();
-                    String paymentName = scanner.next();
+                    String paymentName = scanner.nextLine();
+
+                    while(paymentName.length() < 2){
+                        paymentName = scanner.nextLine();
+                    }
 
                     System.out.println("Please enter the name on the card.");
                     System.out.flush();
-                    String nameOnCard = scanner.next();
+                    String nameOnCard = scanner.nextLine();
+
+                    while(nameOnCard.length() < 2){
+                        nameOnCard = scanner.nextLine();
+                    }
 
                     System.out.println("Please enter the card number.");
                     System.out.flush();
@@ -76,19 +84,19 @@ public class CustomerUserPaymentView extends AbstractView{
                     System.out.flush();
                     String cvc = scanner.next();
 
-                    while(cvc.length() != 3){
+                    while(!isInteger(cvc) || cvc.length() != 3){
                         System.out.println("Error! A CVC code must be 3 digits and contain only numbers.\n");
                         System.out.println("Please enter the CVC security code.");
                         System.out.flush();
                         cvc = scanner.next();
                     }
 
-                    System.out.println("Please enter the expiration date in the form mm-yyyy.");
+                    System.out.println("Please enter the expiration date in the form mm-yy.");
                     System.out.flush();
                     String expiration = scanner.next();
 
-                    while(!isInteger(expiration.substring(0,2)) || !isInteger(expiration.substring(3, 5))
-                            || expiration.length() != 5){
+                    while(expiration.length() != 5 || !isInteger(expiration.substring(0,2))
+                            || !isInteger(expiration.substring(3, 5))){
 
                         System.out.println("Error! The expiration date isn't in the correct form.\n");
                         System.out.println("Example: January 2019 would be entered: 01-19");
@@ -122,6 +130,7 @@ public class CustomerUserPaymentView extends AbstractView{
                     System.out.println("Enter the payment method # to remove.");
 
                     int killChoice = 0;
+
                     // Try to get a numeric response from the user
                     try {
 
@@ -140,11 +149,13 @@ public class CustomerUserPaymentView extends AbstractView{
 
                     System.out.println();
                     break;
+
+                // List all the current payment methods
                 case 3:
                     System.out.println("Your current payment methods:");
 
                     for(PaymentMethod pay: getPaymentMethods(user)){
-                        System.out.println("Payment Method Name:\t" + pay.paymentMethodName);
+                        System.out.println("\nPayment Method Name:\t" + pay.paymentMethodName);
                         System.out.println("Name on Card:\t\t\t" + pay.nameOnCard);
                         System.out.println("Card Number:\t\t\t" + "XXXX-XXXX-XXXX-"
                                 + pay.creditCardNumber.substring(12, 16));
@@ -162,16 +173,13 @@ public class CustomerUserPaymentView extends AbstractView{
 
     }
 
-    private static boolean isInteger(String s) {
 
-        try {
-            Integer.parseInt(s);
-        } catch(NumberFormatException e) {
-            return false;
-        } catch(NullPointerException e) {
-            return false;
+    private static boolean isInteger(String s) {
+        for(int i = 0; i < s.length(); i++){
+            if("0123456789".indexOf(s.charAt(i)) == -1){
+                return false;
+            }
         }
-        // only got here if we didn't return false
         return true;
     }
 
