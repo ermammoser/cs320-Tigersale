@@ -43,7 +43,8 @@ public class CustomerUserHomeView extends AbstractView{
         {
             System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
             System.out.println("0: Logout");
-            System.out.println("3: Update Address Information");
+            System.out.println("2: Add/Delete/View Payment Informationjkjk");
+            System.out.println("3: Add/Delete/View Address Information");
 
             // Try to get a numeric response from the user
             try {
@@ -62,6 +63,9 @@ public class CustomerUserHomeView extends AbstractView{
                 case 0:
                     System.out.println("Logging you out.");
                     return;
+                case 2:
+                    (new CustomerUserPaymentView(scanner, user)).runCustomerUserPaymentView();
+                    break;
                 case 3:
                     (new CustomerUserAddressView(scanner, user)).runCustomerUserAddressView();
                     break;

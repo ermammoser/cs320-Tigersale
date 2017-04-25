@@ -63,13 +63,13 @@ public class CustomerUserPaymentView extends AbstractView{
 
                     System.out.println("Please enter the card number.");
                     System.out.flush();
-                    String cardNumber = scanner.next();
+                    String cardNumber = scanner.next().trim();
 
                     while(!isInteger(cardNumber) || cardNumber.length() != 16){
                         System.out.println("Error! A credit card number must be 16 digits and contain only numbers.");
                         System.out.println("Please enter the card number.");
                         System.out.flush();
-                        cardNumber = scanner.next();
+                        cardNumber = scanner.nextLine();
                     }
 
                     System.out.println("Please enter the CVC security code.");
@@ -87,9 +87,12 @@ public class CustomerUserPaymentView extends AbstractView{
                     System.out.flush();
                     String expiration = scanner.next();
 
-                    while(expiration.length() != 7){
+                    while(!isInteger(expiration.substring(0,2)) || !isInteger(expiration.substring(3, 5))
+                            || expiration.length() != 5){
+
                         System.out.println("Error! The expiration date isn't in the correct form.\n");
-                        System.out.println("Please enter the expiration date in the form mm-yyyy.");
+                        System.out.println("Example: January 2019 would be entered: 01-19");
+                        System.out.println("Please enter the expiration date in the form mm-yy.");
                         System.out.flush();
                         expiration = scanner.next();
                     }
@@ -99,7 +102,7 @@ public class CustomerUserPaymentView extends AbstractView{
 
                     break;
 
-                // Update an existing address
+                // Delete existing payment method
                 case 2:
                     System.out.println("Your current payment methods:");
                     int payNum = 0;
@@ -116,7 +119,7 @@ public class CustomerUserPaymentView extends AbstractView{
                         payNum++;
                     }
 
-                    System.out.println("Enter the address # to remove.");
+                    System.out.println("Enter the payment method # to remove.");
 
                     int killChoice = 0;
                     // Try to get a numeric response from the user
@@ -160,14 +163,11 @@ public class CustomerUserPaymentView extends AbstractView{
     }
 
     private static boolean isInteger(String s) {
-        try {
-            Integer.parseInt(s);
-        } catch(NumberFormatException e) {
-            return false;
-        } catch(NullPointerException e) {
-            return false;
-        }
-        // only got here if we didn't return false
-        return true;
+        Scanner sc = new Scanner(s.trim());
+        if(!sc.hasNextInt(10)) return false;
+        // we know it starts with a valid int, now make sure
+        // there's nothing left!
+        sc.nextInt(10);
+        return !sc.hasNext();
     }
 }
