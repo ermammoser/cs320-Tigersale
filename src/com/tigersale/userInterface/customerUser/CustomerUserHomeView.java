@@ -2,6 +2,7 @@ package com.tigersale.userInterface.customerUser;
 
 import com.tigersale.model.CustomerUser;
 import com.tigersale.userInterface.AbstractView;
+import com.tigersale.userInterface.WelcomeView;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -31,45 +32,50 @@ public class CustomerUserHomeView extends AbstractView{
     /**
      * This method represents the logged in users home view
      */
-    public void runCustomerUserHomeView()
-    {
+    public void runCustomerUserHomeView() {
         int choice = 0;
 
-        System.out.println("=========================================================");
-        System.out.println("                     Welcome to Home!                    ");
-        System.out.println("=========================================================");
-        System.out.println("Hello " + user.firstName);
-        while(true)
-        {
+        while (true) {
+            System.out.println("=========================================================");
+            System.out.println("                     Welcome to Home!                    ");
+            System.out.println("=========================================================");
+            System.out.println("Hello " + user.firstName);
+
             System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
-            System.out.println("0: Logout");
-            System.out.println("3: Update Address Information");
+            System.out.println("0: Go Back");
+            System.out.println("1: View Products");
+            System.out.println("2: View/Edit Payment Methods");
+            System.out.println("3: View/Edit  Addresses");
+            //Current and past orders
+            System.out.println("4: View Orders");
+            System.out.println("5: Logout");
 
             // Try to get a numeric response from the user
             try {
                 choice = scanner.nextInt();
-            }
-            catch(InputMismatchException e)
-            {
+            } catch (InputMismatchException e) {
                 System.out.println("Please type in an integer corresponding to your preferred option.");
                 scanner.next();
                 continue;
             }
 
-            switch (choice)
-            {
+            Scanner scanner = new Scanner(System.in);
+            switch (choice) {
                 // Quit the application
                 case 0:
+                    return;
+                case 1:
+                    (new ListOfProductView(scanner, user)).runListOfProductView();
+                    break;
+                case 5:
                     System.out.println("Logging you out.");
                     return;
-                case 3:
-                    (new CustomerUserAddressView(scanner, user)).runCustomerUserAddressView();
-                    break;
                 default:
                     System.out.println("I am sorry, the option you chose does not exist. Please try again.");
                     break;
 
             }
         }
+
     }
 }
