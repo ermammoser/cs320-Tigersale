@@ -14,7 +14,7 @@ import static com.tigersale.database.PaymentMethodTable.getPaymentMethods;
 import static com.tigersale.database.PaymentMethodTable.insertPaymentMethod;
 
 /**
- * Created by JimmmerS on 4/24/17.
+ * Created by JimmmerS on 4/24/17 for the tigersale.com application
  */
 public class CustomerUserPaymentView extends AbstractView{
     CustomerUser user;
@@ -24,6 +24,10 @@ public class CustomerUserPaymentView extends AbstractView{
         this.user = user;
     }
 
+
+    /**
+     * Provides a view for a Customer User to edit their payment methods
+     */
     public void runCustomerUserPaymentView(){
 
 
@@ -39,6 +43,7 @@ public class CustomerUserPaymentView extends AbstractView{
             try {
 
                 choice = scanner.nextInt();
+                scanner.nextLine();
             } catch (InputMismatchException e) {
                 System.out.println("Enter an integer corresponding to your preferred option.");
                 scanner.next();
@@ -54,7 +59,6 @@ public class CustomerUserPaymentView extends AbstractView{
 
                 case 1:
                     System.out.println("Please enter the payment method name. Example: Debit Card");
-                    System.out.flush();
                     String paymentName = scanner.nextLine();
 
                     while(paymentName.length() < 2){
@@ -62,38 +66,33 @@ public class CustomerUserPaymentView extends AbstractView{
                     }
 
                     System.out.println("Please enter the name on the card.");
-                    System.out.flush();
                     String nameOnCard = scanner.nextLine();
 
                     while(nameOnCard.length() < 2){
+                        System.out.println("Sorry, that name is too short. Please try again.");
                         nameOnCard = scanner.nextLine();
                     }
 
                     System.out.println("Please enter the card number.");
-                    System.out.flush();
-                    String cardNumber = scanner.next().trim();
+                    String cardNumber = scanner.nextLine().trim();
 
-                    while(cardNumber.length() != 16){//
+                    while(cardNumber.length() != 16){
                         System.out.println("Error! A credit card number must be 16 digits and contain only numbers.");
                         System.out.println("Please enter the card number.");
-                        System.out.flush();
-                        cardNumber = scanner.nextLine();
+                        cardNumber = scanner.nextLine().trim();
                     }
 
                     System.out.println("Please enter the CVC security code.");
-                    System.out.flush();
-                    String cvc = scanner.next();
+                    String cvc = scanner.nextLine();
 
                     while(!isInteger(cvc) || cvc.length() != 3){
                         System.out.println("Error! A CVC code must be 3 digits and contain only numbers.\n");
                         System.out.println("Please enter the CVC security code.");
-                        System.out.flush();
-                        cvc = scanner.next();
+                        cvc = scanner.nextLine();
                     }
 
                     System.out.println("Please enter the expiration date in the form mm-yy.");
-                    System.out.flush();
-                    String expiration = scanner.next();
+                    String expiration = scanner.nextLine();
 
                     while(expiration.length() != 5 || !isInteger(expiration.substring(0,2))
                             || !isInteger(expiration.substring(3, 5))){
@@ -101,19 +100,18 @@ public class CustomerUserPaymentView extends AbstractView{
                         System.out.println("Error! The expiration date isn't in the correct form.\n");
                         System.out.println("Example: January 2019 would be entered: 01-19");
                         System.out.println("Please enter the expiration date in the form mm-yy.");
-                        System.out.flush();
-                        expiration = scanner.next();
+                        expiration = scanner.nextLine();
                     }
 
-                    System.out.println("You have successfully added a payment method.\n");
                     insertPaymentMethod(paymentName, nameOnCard, cardNumber, cvc, expiration, user);
+                    System.out.println("You have successfully added a payment method.\n");
 
                     break;
 
                 // Delete existing payment method
                 case 2:
                     System.out.println("Your current payment methods:");
-                    int payNum = 0;
+                    int payNum = 1;
                     List<PaymentMethod> paymentList = getPaymentMethods(user);
 
                     for(PaymentMethod pay: paymentList){
@@ -127,7 +125,10 @@ public class CustomerUserPaymentView extends AbstractView{
                         payNum++;
                     }
 
-                    System.out.println("Enter the payment method # to remove.");
+                    System.out.println();
+                    System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
+                    System.out.println("0: Go back");
+                    System.out.println("#: Payment Method to delete");
 
                     int killChoice = 0;
 
@@ -135,17 +136,24 @@ public class CustomerUserPaymentView extends AbstractView{
                     try {
 
                         killChoice = scanner.nextInt();
+                        scanner.nextLine();
                     } catch (InputMismatchException e) {
                         System.out.println("Error! Input must be an integer.\n");
                         break;
                     }
 
-                    if(killChoice >= paymentList.size()){
-                        System.out.println("Error! The number entered is too large.\n");
+                    if(killChoice == 0)
+                    {
+                        continue;
+                    }
+                    if(killChoice > paymentList.size() || killChoice < 0){
+                        System.out.println("Error! The number entered is incorrect. Please try again.\n");
                         break;
                     }
-
-                    deletePaymentMethod(paymentList.get(killChoice));
+                    else {
+                        deletePaymentMethod(paymentList.get(killChoice - 1));
+                        System.out.println("Payment method deleted.");
+                    }
 
                     System.out.println();
                     break;
