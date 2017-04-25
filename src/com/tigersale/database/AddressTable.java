@@ -61,19 +61,33 @@ public class AddressTable {
      *
      * @return The number of rows updated
      */
-    public static int deleteAddress(Address addr)
+    public static int deleteAddress(Address addr, CustomerUser user)
     {
         int numChanged = 0;
-        try {
-            PreparedStatement deleteStatement = DatabaseConnection.conn.prepareStatement("DELETE FROM " +
-                    TABLE_NAME + " WHERE " + Fields.AddressId + " = ?");
 
-            deleteStatement.setInt(1, addr.id);
-            numChanged = deleteStatement.executeUpdate();
-        }
-        catch(SQLException e)
+        // Check if the address has already been used
+        if(OrderTable.addressUsed(addr))
         {
-            e.printStackTrace();
+            try {
+                PreparedStatement deleteStatement = DatabaseConnection.conn.prepareStatement("UPDATE " +
+                        TABLE_NAME + " SET " + Fields.CustomerUsername + " = NULL WHERE " + Fields.AddressId + " = ?");
+
+                deleteStatement.setInt(1, addr.id);
+                numChanged = deleteStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                PreparedStatement deleteStatement = DatabaseConnection.conn.prepareStatement("DELETE FROM " +
+                        TABLE_NAME + " WHERE " + Fields.AddressId + " = ?");
+
+                deleteStatement.setInt(1, addr.id);
+                numChanged = deleteStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return numChanged;
     }

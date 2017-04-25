@@ -61,6 +61,31 @@ public class OrderTable {
     }
 
     /**
+     * Returns whether or not the address has been used before
+     *
+     * @param addr The address in question
+     *
+     * @return Whether or not the address has been used before
+     */
+    public static boolean addressUsed(Address addr)
+    {
+        boolean available = false;
+        try {
+            PreparedStatement searchStatement = DatabaseConnection.conn.prepareStatement("SELECT * FROM " +
+                    TABLE_NAME + " WHERE " + Fields.AddressId + " = ?");
+            searchStatement.setInt(1, addr.id);
+            ResultSet rs = searchStatement.executeQuery();
+            available = rs.next();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return available;
+    }
+
+
+    /**
      * Returns a list of all of the orders for a Customer User
      *
      * @param user The user to search for orders for

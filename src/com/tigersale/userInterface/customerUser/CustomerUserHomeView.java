@@ -42,13 +42,11 @@ public class CustomerUserHomeView extends AbstractView{
             System.out.println("Hello " + user.firstName);
 
             System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
-            System.out.println("0: Go Back");
+            System.out.println("0: Logout");
             System.out.println("1: View Products");
-            System.out.println("2: View/Edit Payment Methods");
-            System.out.println("3: View/Edit  Addresses");
-            //Current and past orders
+            System.out.println("2: Add/Delete/View Payment Information");
+            System.out.println("3: Add/Delete/View Address Information");
             System.out.println("4: View Orders");
-            System.out.println("5: Logout");
 
             // Try to get a numeric response from the user
             try {
@@ -59,7 +57,6 @@ public class CustomerUserHomeView extends AbstractView{
                 continue;
             }
 
-            Scanner scanner = new Scanner(System.in);
             switch (choice) {
                 // Quit the application
                 case 0:
@@ -67,9 +64,15 @@ public class CustomerUserHomeView extends AbstractView{
                 case 1:
                     (new ListOfProductView(scanner, user)).runListOfProductView();
                     break;
-                case 5:
-                    System.out.println("Logging you out.");
-                    return;
+                case 2:
+                    (new CustomerUserPaymentView(scanner, user)).runCustomerUserPaymentView();
+                    break;
+                case 3:
+                    (new CustomerUserAddressView(scanner, user)).runCustomerUserAddressView();
+                    break;
+                case 4:
+                    // view orders
+                    break;
                 default:
                     System.out.println("I am sorry, the option you chose does not exist. Please try again.");
                     break;

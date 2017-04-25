@@ -41,6 +41,7 @@ public class CustomerUserLoginView extends AbstractView{
             // Try to get a numeric response from the user
             try {
                 choice = scanner.nextInt();
+                scanner.nextLine();
             }
             catch(InputMismatchException e)
             {
@@ -57,9 +58,9 @@ public class CustomerUserLoginView extends AbstractView{
                 // Login
                 case 1:
                     System.out.println("Please enter your username.");
-                    String username = scanner.next();
+                    String username = scanner.nextLine();
                     System.out.println("Please enter your password.");
-                    String password = scanner.next();
+                    String password = scanner.nextLine();
                     CustomerUser user = CustomerUserTable.login(username, password);
                     if(user == null)
                     {
@@ -100,7 +101,7 @@ public class CustomerUserLoginView extends AbstractView{
         System.out.println("Please type in your username.");
         while (true)
         {
-            username = scanner.next();
+            username = scanner.nextLine();
             if(CustomerUserTable.usernameAvaliable(username))
             {
                 break;
@@ -114,9 +115,9 @@ public class CustomerUserLoginView extends AbstractView{
         while(true)
         {
             System.out.println("Please type in your desired password.");
-            password = scanner.next();
+            password = scanner.nextLine();
             System.out.println("Please confirm your password.");
-            String tempPassword = scanner.next();
+            String tempPassword = scanner.nextLine();
             if(password.equals(tempPassword))
             {
                 break;
@@ -131,7 +132,7 @@ public class CustomerUserLoginView extends AbstractView{
         {
             System.out.println("Please enter your date of birth. (Use the format 'yyyy-mm-dd'");
             try {
-                dateOfBirth = Date.valueOf(scanner.next());
+                dateOfBirth = Date.valueOf(scanner.nextLine());
             }
             catch(IllegalArgumentException e)
             {
@@ -141,9 +142,9 @@ public class CustomerUserLoginView extends AbstractView{
             break;
         }
         System.out.println("Please enter your first name.");
-        firstName = scanner.next();
+        firstName = scanner.nextLine();
         System.out.println("Please enter your last name.");
-        lastName = scanner.next();
+        lastName = scanner.nextLine();
         System.out.println("Please enter your middle initial.");
         middleInitial = scanner.next().substring(0,1);
 
