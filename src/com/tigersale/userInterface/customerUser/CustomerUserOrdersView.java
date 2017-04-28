@@ -11,11 +11,12 @@ import javafx.util.Pair;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import static com.tigersale.database.AddressTable.*;
 
 /**
- * Created by JimmmerS on 4/22/17 for the tigersale.com application.
+ * Created by ermam on 4/28/17 for the tigersale.com application.
  */
 public class CustomerUserOrdersView extends AbstractView {
 
@@ -111,18 +112,18 @@ public class CustomerUserOrdersView extends AbstractView {
                     System.out.println("0: Go back");
                     System.out.println("#: Cancel order");
 
-                    List<Order> orders = OrderTable.getOrders(user);
+                    // Only get placed orders
+                    List<Order> orders = OrderTable.getOrders(user).stream()
+                            .filter(order -> order.status == Order.Status.Placed).collect(Collectors.toList());
 
                     int orderNum = 1;
 
                     for (Order order : orders) {
-                        if(order.status == Order.Status.Placed) {
                             System.out.println("Order #" + orderNum);
                             System.out.println("Date:\t\t" + order.date);
                             System.out.println("Status:\t\t" + order.status);
                             System.out.println("Shipping to:\t\t" + order.address);
                             orderNum++;
-                        }
                     }
 
                     int orderChoice = 0;

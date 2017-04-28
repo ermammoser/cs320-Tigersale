@@ -1,7 +1,9 @@
 package com.tigersale.userInterface.customerUser;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import com.tigersale.database.AddressTable;
+import com.tigersale.database.OrderTable;
 import com.tigersale.database.ShoppingListTable;
+import com.tigersale.model.Address;
 import com.tigersale.model.CustomerUser;
 import com.tigersale.model.Product;
 import com.tigersale.userInterface.AbstractView;
@@ -13,7 +15,7 @@ import java.util.Scanner;
 
 /**
  * Shopping List view
- * @author My Tran
+ * @author My Tran 4/20/2017 for the tigersale.com application.
  */
 
 public class ShoppingListView extends AbstractView {
@@ -39,11 +41,17 @@ public class ShoppingListView extends AbstractView {
      */
     public void runShoppingListView() {
         while (true) {
-            int choice, size;
+            int choice;
             //Print items in the list
             List<Pair<Product, Integer>> shoppingList = ShoppingListTable.getShoppingList(user);
 
-            size = shoppingList.size();
+            if(shoppingList.size()  <= 0)
+            {
+                System.out.println("Your shopping list is empty.");
+                System.out.println();
+                return;
+            }
+
             printShoppingList(shoppingList);
 
             System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
@@ -56,36 +64,77 @@ public class ShoppingListView extends AbstractView {
             // Try to get a numeric response from the user
             try {
                 choice = scanner.nextInt();
+                scanner.nextLine();
             } catch (InputMismatchException e) {
                 System.out.println("Please type in an integer corresponding to your preferred option.");
                 scanner.next();
                 continue;
             }
-            //Invalid choice
-            if (choice > 3) {
-                System.out.println("I am sorry, the option you chose does not exist. Please try again.");
-                continue;
-            }
-            //Valid choice
-            Product chosen;
-            if (choice == 0) {
-                //Go Back to ListOfProductView
-                return;
-            } else if (choice == 1) {
-                //Edit product's amount
-                editAmountView(shoppingList);
 
-            } else if (choice == 2) {
-                //Remove product
-                removeProductView(shoppingList);
-
-            } else if (choice == (size + 4))
+            switch(choice)
             {
-                //Place an order
-                // TODO
-                return;
-            }
+                case 0:
+                    return;
+                case 1:
+                    editAmountView(shoppingList);
+                    break;
+                case 2:
+                    removeProductView(shoppingList);
+                    break;
+                case 3:
+                    List<Address> addresses = AddressTable.getAddresses(user);
+                    if(addresses.size() == 0)
+                    {
+                        System.out.println("Sorry, you dont have any addresses in the system.  Please exit and input and address, then try again.");
+                    }
+                    else
+                    {
+                        while(true)
+                        {
+                            System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
+                            System.out.println(0 + ": Go Back To View Product List");
+                            System.out.println("#: Address to ship to");
 
+                            int addressNum = 1;
+                            for(Address address: addresses)
+                            {
+                                System.out.println(addressNum + ": " + address);
+                                addressNum++;
+                            }
+
+                            int addressChoice = 0;
+                            // Try to get a numeric response from the user
+                            try {
+                                addressChoice = scanner.nextInt();
+                                scanner.nextLine();
+                            } catch (InputMismatchException e) {
+                                System.out.println("Please type in an integer corresponding to your preferred option.");
+                                scanner.next();
+                                continue;
+                            }
+
+                            if(addressChoice == 0)
+                            {
+                                break;
+                            }
+                            else if(addressChoice > addresses.size() || addressChoice < 0)
+                            {
+                                System.out.println("Error! The option you chose is invalid. Please try again.");
+                            }
+                            else
+                            {
+                                OrderTable.placeOrder(user, addresses.get(addressChoice - 1), ShoppingListTable.getShoppingList(user));
+                                ShoppingListTable.clearShoppingList(user);
+                                System.out.println("Your order has been placed.");
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    System.out.println("I am sorry, the option you chose does not exist. Please try again.");
+                    break;
+            }
         }
     }
 
