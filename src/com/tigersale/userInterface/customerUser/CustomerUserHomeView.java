@@ -71,7 +71,7 @@ public class CustomerUserHomeView extends AbstractView{
                     (new CustomerUserAddressView(scanner, user)).runCustomerUserAddressView();
                     break;
                 case 4:
-                    // view orders
+                    (new CustomerUserOrdersView(scanner, user)).runCustomerUserOrderView();
                     break;
                 default:
                     System.out.println("I am sorry, the option you chose does not exist. Please try again.");

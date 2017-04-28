@@ -61,6 +61,34 @@ public class OrderTable {
     }
 
     /**
+     * Changes the status of an order
+     *
+     * @param order The order to change
+     * @param status The status to change the order to
+     *
+     * @return Number of rows changed
+     */
+    public static int changeOrderStatus(Order order, Order.Status status)
+    {
+        int numChanged = 0;
+        try {
+            PreparedStatement insertStatement = DatabaseConnection.conn.prepareStatement("UPDATE " +
+                    TABLE_NAME + " SET " + Fields.Status + " = ? WHERE " + Fields.TransactionId+ " = ?"
+            );
+
+            insertStatement.setInt(1, status.ordinal());
+            insertStatement.setInt(2, order.transactionId);
+
+            numChanged = insertStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return numChanged;
+    }
+
+    /**
      * Returns whether or not the address has been used before
      *
      * @param addr The address in question
