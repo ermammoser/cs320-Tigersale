@@ -35,62 +35,81 @@ public class ListOfProductView extends AbstractView {
     public void runListOfProductView() {
         while (true) {
             System.out.println("=========================================================");
-            System.out.println("                     List of Products                    ");
+            System.out.println("                        Products                         ");
             System.out.println("=========================================================");
 
-            //Retrieve the list of products from the database
-            List<Product> products = ProductTable.viewProducts();
-            int size = products.size();
-            int choice;
+            System.out.println("Please type in an integer corresponding to your preferred option.");
+            System.out.println(0 + ": Go Back");
+            System.out.println(1 + ": View all Products");
+            System.out.println(2 + ": Search for Products");
 
-            if (size == 0)
-            {
-                System.out.println("There is no products in the system yet");
-                return;
-            } else
-            {
+            int choice = 0;
+
+            // Try to get a numeric response from the user
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
                 System.out.println("Please type in an integer corresponding to your preferred option.");
-                System.out.println(0 + ": Go Back");
-                System.out.println(1 + ": View Shopping List");
-                System.out.println("OR");
-                System.out.println("-----------------------------------------------------");
-                //Print all the products with associated numbers
-                System.out.println("Please choose the number associated with the product to view detail:");
-                int i = 0;
-                while (i < size) {
-                    System.out.println((i+2) + ": " + products.get(i).name);
-                    i++;
-                }
+                scanner.next();
+                continue;
+            }
 
-
-                // Try to get a numeric response from the user
-                try {
-                    choice = scanner.nextInt();
-                } catch (InputMismatchException e) {
-                    System.out.println("Please type in an integer corresponding to your preferred option.");
-                    scanner.next();
-                    continue;
-                }
-
-                //Invalid option
-                if (choice > (size + 1))
-                {
-                    System.out.println("I am sorry, the option you chose does not exist. Please try again.");
-                    continue;
-                }
-                //Valid option, view detail of the chosen product
-                if (choice == 0)
-                {
+            switch (choice)
+            {
+                case 0:
                     return;
-                } else if (choice == 1)
-                {
-                    (new ShoppingListView(scanner, user)).runShoppingListView();
-                } else
-                {
-                    //Product's index = choice - 2 because we have used 0 and 1 for other options above
-                    Product chosen = products.get(choice-2);
-                    viewProductDetail(chosen);
-                }
+                case 1:
+                    showProducts("");
+                    break;
+                case 2:
+                    System.out.println("Please type in text to search for:");
+                    String searchString = scanner.nextLine();
+                    showProducts(searchString.trim());
+                    break;
+                default:
+                    System.out.println("I am sorry, the option you chose does not exist. Please try again.");
+                    break;
+            }
+        }
+    }
+
+    private void showProducts(String searchString)
+    {
+        while(true) {
+            System.out.println("Please type in an integer corresponding to your preferred option.");
+            System.out.println(0 + ": Go Back");
+            System.out.println("#: Selected product");
+            System.out.println();
+
+            List<Product> products = ProductTable.searchForProducts(searchString);
+            int prodNum = 1;
+            for (Product prod : products) {
+                System.out.println(prodNum + ": " + prod.name + " - $" + prod.price);
+                prodNum++;
+            }
+
+            int choice = 0;
+            // Try to get a numeric response from the user
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Please type in an integer corresponding to your preferred option.");
+                scanner.next();
+                continue;
+            }
+
+            if(choice == 0)
+            {
+                return;
+            }
+            else if(choice > products.size() || choice < 0)
+            {
+                System.out.println("Error! The number entered is incorrect Please try again.");
+            }
+            else
+            {
+                viewProductDetail(products.get(choice - 1));
             }
         }
 
@@ -125,12 +144,7 @@ public class ListOfProductView extends AbstractView {
                 scanner.next();
                 continue;
             }
-            //Invalid option:
-            if (choice > 1)
-            {
-                System.out.println("I am sorry, the option you chose does not exist. Please try again.");
-                continue;
-            }
+
             //Valid option:
             switch (choice)
             {
@@ -140,6 +154,10 @@ public class ListOfProductView extends AbstractView {
                 //Add the chosen product to Shopping List
                 case 1:
                     addProductView(chosen);
+                    return;
+                default:
+                    System.out.println("I am sorry, the option you chose does not exist. Please try again.");
+                    break;
 
             }
         }
