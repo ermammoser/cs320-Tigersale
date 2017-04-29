@@ -44,9 +44,10 @@ public class CustomerUserHomeView extends AbstractView{
             System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
             System.out.println("0: Logout");
             System.out.println("1: View Products");
-            System.out.println("2: Add/Delete/View Payment Information");
-            System.out.println("3: Add/Delete/View Address Information");
-            System.out.println("4: View Orders");
+            System.out.println("2: View Shopping List");
+            System.out.println("3: Add/Delete/View Payment Information");
+            System.out.println("4: Add/Delete/View Address Information");
+            System.out.println("5: View Orders");
 
             // Try to get a numeric response from the user
             try {
@@ -65,13 +66,16 @@ public class CustomerUserHomeView extends AbstractView{
                     (new ListOfProductView(scanner, user)).runListOfProductView();
                     break;
                 case 2:
-                    (new CustomerUserPaymentView(scanner, user)).runCustomerUserPaymentView();
+                    (new ShoppingListView(scanner, user)).runShoppingListView();
                     break;
                 case 3:
-                    (new CustomerUserAddressView(scanner, user)).runCustomerUserAddressView();
+                    (new CustomerUserPaymentView(scanner, user)).runCustomerUserPaymentView();
                     break;
                 case 4:
-                    // view orders
+                    (new CustomerUserAddressView(scanner, user)).runCustomerUserAddressView();
+                    break;
+                case 5:
+                    (new CustomerUserOrdersView(scanner, user)).runCustomerUserOrderView();
                     break;
                 default:
                     System.out.println("I am sorry, the option you chose does not exist. Please try again.");

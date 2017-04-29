@@ -28,6 +28,6 @@ public class Address {
     @Override
     public String toString()
     {
-        return id + ": " + street + " " + city + " " + state + ", " + zipCode + ", " + customerUsername;
+        return street + " " + city + " " + state + ", " + zipCode;
     }
 }
