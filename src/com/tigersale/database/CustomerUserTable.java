@@ -5,6 +5,7 @@ import com.tigersale.model.CustomerUser;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.*;
 
 /**
@@ -23,7 +24,7 @@ public class CustomerUserTable {
     /**
      * The date of the file that contains mock data for the table
      */
-    private static final String MOCK_DATA =  "CustomerUser.csv";
+    private static final String MOCK_DATA =  "mockData/CustomerUser.csv";
 
     /**
      * Helpful enumeration for all of the fields in the CustomerUser table
@@ -218,7 +219,7 @@ public class CustomerUserTable {
             stmt.close();
 
             // Load all of the mock data
-            BufferedReader br = new BufferedReader(new FileReader(CustomerUserTable.class.getClassLoader().getResource(MOCK_DATA).getFile()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(CustomerUserTable.class.getClassLoader().getResourceAsStream(MOCK_DATA)));
 
             // Skip first line because it is just headers
             br.readLine();

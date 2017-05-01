@@ -6,6 +6,7 @@ import com.tigersale.model.CustomerUser;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class AddressTable {
     /**
      * The date of the file that contains mock data for the table
      */
-    private static final String MOCK_DATA =  "Address.csv";
+    private static final String MOCK_DATA =  "mockData/Address.csv";
 
     /**
      * Helpful enumeration for all of the fields in the Address table
@@ -195,7 +196,7 @@ public class AddressTable {
             stmt.close();
 
             // Load all of the mock data
-            BufferedReader br = new BufferedReader(new FileReader(AddressTable.class.getClassLoader().getResource(MOCK_DATA).getFile()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(AddressTable.class.getClassLoader().getResourceAsStream(MOCK_DATA)));
 
             // Skip first line because it is just headers
             br.readLine();
