@@ -282,6 +282,7 @@ public class OrderTable {
                     + Fields.Status + " INTEGER,"
                     + Fields.AddressId + " INTEGER,"
                     + Fields.CustomerUsername + " VARCHAR(30),"
+                    + "CONSTRAINT chkStatus CHECK (" + Fields.Status + " in (0,1,2,3,4)),"
                     + "FOREIGN KEY (" + Fields.AddressId + ") REFERENCES " + AddressTable.TABLE_NAME + "(" + AddressTable.Fields.AddressId + "),"
                     + "FOREIGN KEY (" + Fields.CustomerUsername + ") REFERENCES " + CustomerUserTable.TABLE_NAME + "(" + CustomerUserTable.Fields.CustomerUsername + ")"
                     +");" ;

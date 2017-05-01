@@ -2,9 +2,11 @@ package com.tigersale.userInterface.customerUser;
 
 import com.tigersale.database.AddressTable;
 import com.tigersale.database.OrderTable;
+import com.tigersale.database.PaymentMethodTable;
 import com.tigersale.database.ShoppingListTable;
 import com.tigersale.model.Address;
 import com.tigersale.model.CustomerUser;
+import com.tigersale.model.PaymentMethod;
 import com.tigersale.model.Product;
 import com.tigersale.userInterface.AbstractView;
 import javafx.util.Pair;
@@ -83,9 +85,14 @@ public class ShoppingListView extends AbstractView {
                     break;
                 case 3:
                     List<Address> addresses = AddressTable.getAddresses(user);
+                    List<PaymentMethod> paymentMethods = PaymentMethodTable.getPaymentMethods(user);
                     if(addresses.size() == 0)
                     {
-                        System.out.println("Sorry, you dont have any addresses in the system.  Please exit and input and address, then try again.");
+                        System.out.println("Sorry, you dont have any addresses in the system.  Please exit and input an address, then try again.");
+                    }
+                    if(paymentMethods.size() == 0)
+                    {
+                        System.out.println("Sorry, you dont have any payment methods in the system.  Please exit and input a payment method, then try again.");
                     }
                     else
                     {
@@ -123,10 +130,43 @@ public class ShoppingListView extends AbstractView {
                             }
                             else
                             {
-                                OrderTable.placeOrder(user, addresses.get(addressChoice - 1), ShoppingListTable.getShoppingList(user));
-                                ShoppingListTable.clearShoppingList(user);
-                                System.out.println("Your order has been placed.");
-                                break;
+                                System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
+                                System.out.println(0 + ": Go Back To View Product List");
+                                System.out.println("#: Payment Method to use");
+
+                                int payNum = 1;
+                                for(PaymentMethod paymentMethod : paymentMethods)
+                                {
+                                    System.out.println(payNum + ": " + paymentMethod);
+                                    payNum++;
+                                }
+
+                                int payChoice = 0;
+                                // Try to get a numeric response from the user
+                                try {
+                                    payChoice = scanner.nextInt();
+                                    scanner.nextLine();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("Please type in an integer corresponding to your preferred option.");
+                                    scanner.next();
+                                    continue;
+                                }
+
+                                if(payChoice == 0)
+                                {
+                                    break;
+                                }
+                                else if(payChoice > paymentMethods.size() || payChoice < 0)
+                                {
+                                    System.out.println("Error! The option you chose is invalid. Please try again.");
+                                }
+                                else {
+
+                                    OrderTable.placeOrder(user, addresses.get(addressChoice - 1), ShoppingListTable.getShoppingList(user));
+                                    ShoppingListTable.clearShoppingList(user);
+                                    System.out.println("Your order has been placed.");
+                                    break;
+                                }
                             }
                         }
                     }
@@ -145,6 +185,7 @@ public class ShoppingListView extends AbstractView {
     private void printShoppingList( List<Pair<Product, Integer>> shoppingList) {
 
         int size = shoppingList.size();
+        System.out.println();
         System.out.println("=========================================================");
         System.out.println("                     Shopping List                       ");
         System.out.println("=========================================================");
