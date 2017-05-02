@@ -160,12 +160,12 @@ public class OrderTable {
             PreparedStatement insertOrderStatement = DatabaseConnection.conn.prepareStatement("INSERT INTO " +
                     TABLE_NAME + "("+ Fields.Date + "," + Fields.Cost + "," + Fields.Status + "," +
                     Fields.AddressId + "," + Fields.CustomerUsername + ") VALUES (GETDATE(),?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            int cost = 0;
+            double cost = 0;
             for(Pair<Product, Integer> prodPair : products)
             {
                 cost += prodPair.getKey().price * prodPair.getValue();
             }
-            insertOrderStatement.setInt(1, cost);
+            insertOrderStatement.setDouble(1, cost);
             insertOrderStatement.setInt(2, Order.Status.Placed.ordinal());
             insertOrderStatement.setInt(3, address.id);
             insertOrderStatement.setString(4, user.customerUsername);
