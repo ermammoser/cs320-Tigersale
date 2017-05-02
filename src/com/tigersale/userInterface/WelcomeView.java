@@ -27,7 +27,7 @@ public class WelcomeView extends AbstractView{
     public void runWelcomeView()
     {
         int choice = 0;
-
+        System.out.println();
         System.out.println("=========================================================");
         System.out.println("                Welcome to Tigersale.com!                ");
         System.out.println("=========================================================");

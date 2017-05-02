@@ -32,7 +32,7 @@ public class CustomerUserLoginView extends AbstractView{
 
         while(true)
         {
-
+            System.out.println();
             System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
             System.out.println("0: Go Back");
             System.out.println("1: Login");

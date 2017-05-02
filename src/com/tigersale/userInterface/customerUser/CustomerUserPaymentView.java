@@ -33,6 +33,7 @@ public class CustomerUserPaymentView extends AbstractView{
 
         int choice = 0;
         while(true) {
+            System.out.println();
             System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
             System.out.println("0: Go Back");
             System.out.println("1: Add Payment Information");
@@ -160,6 +161,7 @@ public class CustomerUserPaymentView extends AbstractView{
 
                 // List all the current payment methods
                 case 3:
+                    System.out.println();
                     System.out.println("Your current payment methods:");
 
                     for(PaymentMethod pay: getPaymentMethods(user)){
