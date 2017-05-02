@@ -5,6 +5,7 @@ import com.tigersale.model.Order;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +27,7 @@ public class ProdToOrderTable {
     /**
      * The date of the file that contains mock data for the table
      */
-    private static final String MOCK_DATA =  "prodToOrder.csv";
+    private static final String MOCK_DATA =  "mockData/prodToOrder.csv";
 
     /**
      * Helpful enumeration for all of the fields in the table
@@ -72,7 +73,7 @@ public class ProdToOrderTable {
             stmt.close();
 
             // Load all of the mock data
-            BufferedReader br = new BufferedReader(new FileReader(PaymentMethodTable.class.getClassLoader().getResource(MOCK_DATA).getFile()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(ProdToOrderTable.class.getClassLoader().getResourceAsStream(MOCK_DATA)));
 
             // Skip first line because it is just headers
             br.readLine();

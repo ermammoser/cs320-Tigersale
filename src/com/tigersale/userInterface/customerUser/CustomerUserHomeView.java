@@ -36,6 +36,7 @@ public class CustomerUserHomeView extends AbstractView{
         int choice = 0;
 
         while (true) {
+            System.out.println();
             System.out.println("=========================================================");
             System.out.println("                     Welcome to Home!                    ");
             System.out.println("=========================================================");

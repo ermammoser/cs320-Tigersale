@@ -10,6 +10,7 @@ import javax.xml.crypto.Data;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.sql.Date;
@@ -32,7 +33,7 @@ public class OrderTable {
     /**
      * The date of the file that contains mock data for the table
      */
-    private static final String MOCK_DATA =  "Order.csv";
+    private static final String MOCK_DATA =  "mockData/Order.csv";
 
     /**
      * Helpful enumeration for all of the fields in the table
@@ -281,6 +282,7 @@ public class OrderTable {
                     + Fields.Status + " INTEGER,"
                     + Fields.AddressId + " INTEGER,"
                     + Fields.CustomerUsername + " VARCHAR(30),"
+                    + "CONSTRAINT chkStatus CHECK (" + Fields.Status + " in (0,1,2,3,4)),"
                     + "FOREIGN KEY (" + Fields.AddressId + ") REFERENCES " + AddressTable.TABLE_NAME + "(" + AddressTable.Fields.AddressId + "),"
                     + "FOREIGN KEY (" + Fields.CustomerUsername + ") REFERENCES " + CustomerUserTable.TABLE_NAME + "(" + CustomerUserTable.Fields.CustomerUsername + ")"
                     +");" ;
@@ -291,7 +293,7 @@ public class OrderTable {
             stmt.close();
 
             // Load all of the mock data
-            BufferedReader br = new BufferedReader(new FileReader(PaymentMethodTable.class.getClassLoader().getResource(MOCK_DATA).getFile()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(OrderTable.class.getClassLoader().getResourceAsStream(MOCK_DATA)));
 
             // Skip first line because it is just headers
             br.readLine();
