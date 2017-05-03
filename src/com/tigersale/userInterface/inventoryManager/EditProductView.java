@@ -126,11 +126,25 @@ public class EditProductView extends AbstractView {
                         break;
                     }
 
-                    result = ProductTable.updateProductValues(product);
-                    if(result > 0) {
-                        System.out.println("Changes made successfully.");
-                    } else {
-                        System.out.println("There was a problem making changes.");
+                    if(product != null) {
+                        // Edit product values
+                        result = ProductTable.updateProductValues(product);
+
+                        // Check that values were updated
+                        if(result > 0) {
+
+                            // Edit stock value
+                            result = ProductTable.updateStockValue(product, product.stock);
+
+                            // Check that stock was updated
+                            if(result > 0) {
+                                System.out.println("Changes made successfully.");
+                            } else {
+                                System.out.println("There was a problem making stock value changes.");
+                            }
+                        } else {
+                            System.out.println("There was a problem making changes.");
+                        }
                     }
                     return;
             }
