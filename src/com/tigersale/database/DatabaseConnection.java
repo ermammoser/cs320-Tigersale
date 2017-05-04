@@ -15,7 +15,7 @@ import java.sql.SQLException;
  */
 public class DatabaseConnection {
 
-    public static final String DATABASE_LOCATION = ".." + File.separator + "tigersale";
+    public static final String DATABASE_LOCATION = "." + File.separator + "tigersale";
     public static final String DATABASE_NAME = "tigersale";
     public static final String USERNAME = "tigersaleUser";
     public static final String PASSWORD = "tigersalePassword";
