@@ -48,7 +48,7 @@ public class InventoryManagerHomeView extends AbstractView {
             // Try to get a numeric response from the user
             try {
                 choice = scanner.nextInt();
-                scanner.skip("\n");
+                scanner.nextLine();
             } catch (InputMismatchException e) {
                 System.out.println("Please type in an integer corresponding to your preferred option.");
                 scanner.next();
@@ -69,7 +69,7 @@ public class InventoryManagerHomeView extends AbstractView {
                 // Register new InventoryManager
                 case 2:
                     (new RegisterInventoryManagerView(scanner)).runView();
-                    return;
+                    break;
 
                 default:
                     System.out.println("I am sorry, the option you chose does not exist. Please try again.");
