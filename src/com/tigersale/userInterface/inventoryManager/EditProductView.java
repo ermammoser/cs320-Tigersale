@@ -26,13 +26,17 @@ public class EditProductView extends AbstractView {
         while(true) {
             System.out.println("0: Go Back");
             System.out.println("1: Select product");
-            System.out.println("2: Edit product description");
-            System.out.println("3: Edit product price");
-            System.out.println("4: Edit product amount");
-            System.out.println("5: Edit product brand");
-            System.out.println("6: Edit product category");
-            System.out.println("7: Remove product");
-            System.out.println("8: Save and execute changes");
+            if(product != null)
+            {
+                System.out.println(product);
+                System.out.println("2: Edit product description");
+                System.out.println("3: Edit product price");
+                System.out.println("4: Edit product stock");
+                System.out.println("5: Edit product brand");
+                System.out.println("6: Edit product category");
+                System.out.println("7: Remove product");
+                System.out.println("8: Save and execute changes");
+            }
 
             // Try to get a numeric response from the user
             try {
@@ -74,6 +78,7 @@ public class EditProductView extends AbstractView {
                             break;
                         }
                     }
+                    break;
 
                 // Edit description
                 case 2:
@@ -102,7 +107,6 @@ public class EditProductView extends AbstractView {
 
                 // Remove product
                 case 7:
-                    //noinspection ConstantConditions
                     product.stock = 0;
                     result = ProductTable.updateProductValues(product);
 
@@ -119,9 +123,9 @@ public class EditProductView extends AbstractView {
                     System.out.println("\t" + oldProduct);
                     System.out.println("will be changed to");
                     System.out.println("\t" + product);
-                    System.out.println("Are you sure you want to update?");
-                    String confirm = scanner.next();
-                    if(confirm.charAt(0) != 'Y') {
+                    System.out.println("Are you sure you want to update (1 for yes, anything else for no)?");
+                    String confirm = scanner.nextLine();
+                    if(confirm.charAt(0) != '1') {
                         System.out.println("Update aborted.");
                         break;
                     }
@@ -147,6 +151,10 @@ public class EditProductView extends AbstractView {
                         }
                     }
                     return;
+                default:
+                    System.out.println("Sorry, the option you picked was incorrect");
+                    break;
+
             }
         }
     }

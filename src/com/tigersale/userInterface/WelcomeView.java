@@ -39,7 +39,7 @@ public class WelcomeView extends AbstractView{
                 System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
                 System.out.println("0: Exit Application");
                 System.out.println("1: Enter as a Customer");
-                System.out.println("2: Enter as an Inventory Manger");
+                System.out.println("2: Enter as an Inventory Manager");
 
                 // Try to get a numeric response from the user
                 try {

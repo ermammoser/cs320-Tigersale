@@ -130,7 +130,7 @@ public class CustomerUserLoginView extends AbstractView{
         // Get the Date of birth
         while(true)
         {
-            System.out.println("Please enter your date of birth. (Use the format 'yyyy-mm-dd'");
+            System.out.println("Please enter your date of birth. (Use the format 'yyyy-mm-dd')");
             try {
                 dateOfBirth = Date.valueOf(scanner.nextLine());
             }

@@ -192,6 +192,7 @@ public class ShoppingListView extends AbstractView {
         int i = 0;
         if (size == 0)
         {
+            System.out.println();
             System.out.println("Your shopping list if empty.");
             return;
         }

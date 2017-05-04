@@ -241,8 +241,8 @@ public class ProductTable {
                     + Fields.Price + " DECIMAL(10,2),"
                     + Fields.Stock + " INTEGER,"
                     + Fields.Brand + " VARCHAR(30),"
-                    + Fields.Category + " VARCHAR(30)"
-                    +");" ;
+                    + Fields.Category + " VARCHAR(30),"
+                    +"CONSTRAINT chkStock CHECK (" + Fields.Stock + " >= 0));" ;
 
             // Create the createStatement
             Statement stmt = DatabaseConnection.conn.createStatement();
