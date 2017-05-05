@@ -19,6 +19,7 @@ public class Order {
 
         public static Status getStatus(int statusInt)
         {
+            int i = Placed.ordinal();
             if(statusInt == Placed.ordinal())
             {
                 return Placed;

@@ -143,6 +143,32 @@ public class OrderTable {
     }
 
     /**
+     * This is for Inventory Manager to view a very detailed version of all the orders in the table
+     *
+     * @return the list of all orders
+     */
+    public static List<Order> viewOrders()
+    {
+        ArrayList<Order> orders = new ArrayList<>();
+        try
+        {
+            PreparedStatement searchStatement = DatabaseConnection.conn.prepareStatement("SELECT * FROM " + TABLE_NAME + ", " + AddressTable.TABLE_NAME + ", " + CustomerUserTable.TABLE_NAME
+            + " WHERE " + TABLE_NAME  + "." + Fields.CustomerUsername + " = " + CustomerUserTable.TABLE_NAME + "." + CustomerUserTable.Fields.CustomerUsername + " AND " +
+                    AddressTable.TABLE_NAME + "." + AddressTable.Fields.AddressId + " = " + TABLE_NAME + "." + Fields.AddressId);
+            ResultSet rs = searchStatement.executeQuery();
+            while (rs.next())
+            {
+                orders.add(orderFromResultSet(rs));
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    /**
      * Places an order for a user
      *
      * @param user The user to place an order for

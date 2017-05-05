@@ -71,6 +71,7 @@ public class WelcomeView extends AbstractView{
             }
             catch(Exception E)
             {
+
                 System.out.println("Sorry, but an error has occured and you have been logged out.");
                 System.out.println("Please try again. If you keep having troubles, restart the application.");
             }
