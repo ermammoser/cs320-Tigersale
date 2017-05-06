@@ -80,7 +80,6 @@ public class CustomerUserLoginView extends AbstractView{
                 default:
                     System.out.println("I am sorry, the option you chose does not exist. Please try again.");
                     break;
-
             }
         }
     }

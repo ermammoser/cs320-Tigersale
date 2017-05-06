@@ -59,10 +59,11 @@ public class CustomerUserOrdersView extends AbstractView {
                 // View all orders
                 case 1:
                     while(true) {
-                        System.out.println();
-                        System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
-                        System.out.println("0: Go back");
-                        System.out.println("#: Order to view");
+
+                        System.out.println("=========================================================");
+                        System.out.println("                          Orders                         ");
+                        System.out.println("=========================================================");
+
 
                         List<Order> orders = OrderTable.getOrders(user);
 
@@ -77,7 +78,12 @@ public class CustomerUserOrdersView extends AbstractView {
                             orderNum++;
                         }
 
-                        int orderChoice = 0;
+                        System.out.println();
+                        System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
+                        System.out.println("0: Go back");
+                        System.out.println("#: Order to view");
+
+                        int orderChoice ;
 
                         // Try to get a numeric response from the user
                         try {
@@ -85,13 +91,14 @@ public class CustomerUserOrdersView extends AbstractView {
                             scanner.nextLine();
                         } catch (InputMismatchException e) {
                             System.out.println("Error! Input must be an integer.\n");
-                            break;
+                            continue;
                         }
 
                         if (orderChoice == 0) {
                             break;
                         } else if (orderChoice > orders.size() || orderChoice < 0) {
                             System.out.println("Error! The number entered is incorrect Please try again.");
+                            continue;
                         } else {
                             List<Pair<Product, Integer>> productInts = OrderTable.getProducts(orders.get(orderChoice - 1));
                             for (Pair<Product, Integer> prodInt : productInts) {

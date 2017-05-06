@@ -1,3 +1,4 @@
 Username,Password,Salary,HireDate,FirstName,LastName,MiddleInitial
 mattSmith,inventoryPass1,40000,2014-06-25,Matt,Smith,M
 jackPark,inventoryPass2,45000,2010-04-30,Jack,Park,K
+admin,admin,100000,2020-04-12,My,Tran,T
