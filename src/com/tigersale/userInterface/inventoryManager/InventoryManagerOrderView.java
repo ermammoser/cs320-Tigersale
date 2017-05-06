@@ -66,44 +66,48 @@ public class InventoryManagerOrderView extends AbstractView{
                 System.out.println("Error! The number entered is incorrect Please try again.");
 
             } else {
-                outer:{
-                    while (true)
+                while (true)
+                {
+                    //Show the chosen order
+                    Order order = orders.get(orderChoice - 1);
+                    System.out.println("Order #" + orderChoice);
+                    System.out.println("Status:\t\t" + order.status);
+                    System.out.println("List of products:");
+
+                    List<Pair<Product, Integer>> productInts = OrderTable.getProducts(orders.get(orderChoice - 1));
+                    for (Pair<Product, Integer> prodInt : productInts) {
+                        System.out.println(prodInt.getKey().name);
+                        System.out.println("\tAmount:\t\t" + prodInt.getValue());
+                        System.out.println("\tIndividual Price:\t\t" + prodInt.getKey().price);
+                    }
+                    System.out.println();
+                    System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
+                    System.out.println("0: Go back");
+                    System.out.println("1: Edit Order Status");
+
+                    int choice;
+
+                    // Try to get a numeric response from the user
+                    try {
+                        choice = scanner.nextInt();
+                        scanner.nextLine();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Error! Input must be an integer.\n");
+                        scanner.next();
+                        continue;
+                    }
+
+                    if(choice == 0)
                     {
-                        //Show the chosen order
-                        Order order = orders.get(orderChoice - 1);
-                        System.out.println("Order #" + orderChoice);
-                        System.out.println("Status:\t\t" + order.status);
-                        System.out.println("List of products:");
-
-                        List<Pair<Product, Integer>> productInts = OrderTable.getProducts(orders.get(orderChoice - 1));
-                        for (Pair<Product, Integer> prodInt : productInts) {
-                            System.out.println(prodInt.getKey().name);
-                            System.out.println("\tAmount:\t\t" + prodInt.getValue());
-                            System.out.println("\tIndividual Price:\t\t" + prodInt.getKey().price);
-                        }
-                        System.out.println("\n");
-                        System.out.println("Please choose from the following options (Enter the number corresponding to your choice):");
-                        System.out.println("0: Go back");
-                        System.out.println("1: Edit Order Status");
-
-                        int choice;
-
-                        // Try to get a numeric response from the user
-                        try {
-                            choice = scanner.nextInt();
-                            scanner.nextLine();
-                        } catch (InputMismatchException e) {
-                            System.out.println("Error! Input must be an integer.\n");
-                            scanner.next();
-                            continue;
-                        }
-
-                        switch (choice) {
-                            case 0:
-                                break outer;
-                            case 1:
-                                editStatusView(order, choice);
-                        }
+                        break;
+                    }
+                    else if(choice == 1)
+                    {
+                        editStatusView(order, choice);
+                    }
+                    else
+                    {
+                        System.out.println("Sorry, the option that you chose is invalid.  Please try again.");
                     }
                 }
             }

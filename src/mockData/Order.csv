@@ -2,4 +2,4 @@ TransactionID,PurchaseDate,Cost,Status,AddressID,CustomerUsername
 1,2017-01-02,1251.44,2,1,johnDoe
 2,2016-12-12,1000.72,0,4,ericMammoser
 3,2016-10-20,121.73,2,1,johnDoe
-4,2016-10-20,121.73,1,1,johnDoe
+4,2016-10-21,121.73,1,2,janeDoe
